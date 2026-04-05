@@ -23,8 +23,6 @@ export const PersonnelPage = () => {
                 .eq('id', id)
                 .single();
 
-            console.log(data, error);
-
             if (error) {
                 throw new Error(error.message);
             }
@@ -73,26 +71,27 @@ export const PersonnelPage = () => {
     }
 
     return (
-        <div className="grow p-5">
-            <h1 className=" my-5">Personnel</h1>
-            <form className=" flex flex-col w-1/2" onSubmit={handleSubmit}>
-                <label className=" flex flex-col">
-                    <span>Agent Name</span>
-                    <input type="text" id="agentName" name="agentName" className=" border" onChange={handleChange} value={formData.agentName} />
+        <div className="grow px-20 py-10 bg-white">
+            <h1 className=" text-2xl font-semibold text-primary">Personnel</h1>
+            <p className=" text-gray-600 mb-10">Give your agent a basic profile information.</p>
+            <form className=" flex flex-col gap-5 w-1/2" onSubmit={handleSubmit}>
+                <label className=" flex flex-col gap-2">
+                    <span className=" text-primary text-sm">Agent Name</span>
+                    <input className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="text" id="agentName" name="agentName" onChange={handleChange} value={formData.agentName} />
                 </label>
-                <label className=" flex flex-col">
-                    <span>Personnel</span>
-                    <textarea name="personnel" id="personnel" className=" border" onChange={handleChange} value={formData.personnel}></textarea>
+                <label className=" flex flex-col gap-2">
+                    <span className=" text-primary text-sm">Personnel</span>
+                    <textarea name="personnel" id="personnel" className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.personnel}></textarea>
                 </label>
-                <label className=" flex flex-col">
-                    <span>Job Description</span>
-                    <textarea name="jobDescription" id="jobDescription" className=" border" onChange={handleChange} value={formData.jobDescription}></textarea>
+                <label className=" flex flex-col gap-2">
+                    <span className=" text-primary text-sm">Job Description</span>
+                    <textarea name="jobDescription" id="jobDescription" className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.jobDescription}></textarea>
                 </label>
-                <label className=" flex flex-col">
-                    <span>Goals</span>
-                    <textarea name="goals" id="goals" className=" border" onChange={handleChange} value={formData.goals}></textarea>
+                <label className=" flex flex-col gap-2">
+                    <span className=" text-primary text-sm">Goals</span>
+                    <textarea name="goals" id="goals" className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.goals}></textarea>
                 </label>
-                <button type="submit" className=" my-10 w-32 py-1 bg-blue-500">{
+                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer">{
                     mutation.isPending ? 'Saving...' : 'Save'
                 }</button>
             </form>

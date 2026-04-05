@@ -50,7 +50,7 @@ export const AgentListPage = () => {
                 <h2 className=" font-heading text-xl font-extrabold text-primary">Agent Builder</h2>
                 <div className="ml-auto flex items-center">
                     {
-                        user && (<p className=" text-gray-400 text-sm">{user.email}</p>)
+                        user && (<p className=" text-gray-400 text-sm select-none">{user.email}</p>)
                     }
                     <Settings className=" text-gray-400 ml-5 cursor-pointer hover:text-gray-600 transition-colors duration-200" />
                 </div>
@@ -58,11 +58,11 @@ export const AgentListPage = () => {
             <main className=" max-w-6xl mx-auto">
                 <section className=" flex items-center my-10">
                     <h2 className=" text-3xl text-primary font-semibold">Agents</h2>
-                    <button className=" ml-auto px-3 py-2 text-sm bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer"
+                    <button className=" ml-auto px-3 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer"
                         onClick={() => mutation.mutate()}>
                         {
                             mutation.isPending ? "Creating..." : <>
-                                <Plus size={16} /><span>Create Agent</span>
+                                <Plus size={20} /><span>Create Agent</span>
                             </>
                         }
                     </button>

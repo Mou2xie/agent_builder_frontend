@@ -18,7 +18,7 @@ export const AgentCard = ({ id, name, job_description, status }: AgentCardProps)
         <div key={id} className=" bg-white shadow shadow-gray-200 rounded-xl px-8 pt-8">
             <section className=" flex justify-between items-start">
                 <img src={avatar} alt="Agent Avatar" className=" w-18 h-18 rounded-lg" />
-                <div className={` px-3 py-1 bg-gray-100 rounded-full text-sm ${status === "WORKING" ? "text-gray-500" : "text-gray-400"}`}>
+                <div className={` px-3 py-1 bg-gray-100 rounded-full text-[12px] ${status === "WORKING" ? "text-gray-500" : "text-gray-400"}`}>
                     {status}
                 </div>
             </section>
