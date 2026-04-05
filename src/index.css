@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #1A1A1A;
+    --color-tertiary: #E0E0E0;
+    --color-background: #f9f9f9;
+
+    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Comfortaa', cursive;
+}
+
+body {
+    @apply font-body bg-background;
+}
+
+.clamp-2-fixed {
+    line-height: 1.25rem;
+    height: calc(1.25rem * 2);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
