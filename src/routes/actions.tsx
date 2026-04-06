@@ -17,14 +17,14 @@ export const ActionsPage = () => {
                 </button>
             </section>
             <section className=" grid grid-cols-2 gap-5">
-                <div className=" border rounded-xl p-5 space-y-5">
+                <div className=" border border-gray-300 rounded-xl p-5 space-y-5">
                     <div className=" flex items-baseline gap-10">
                         <p className=" text-gray-400">Keywords</p>
                         <div className=" flex gap-2">
-                            <span className=" px-3 py-1 border rounded-full text-sm">
+                            <span className=" px-3 py-1 bg-slate-500 text-white rounded-full text-sm">
                                 portfolio
                             </span>
-                            <span className=" px-3 py-1 border rounded-full text-sm">
+                             <span className=" px-3 py-1 bg-slate-500 text-white rounded-full text-sm">
                                 stock price
                             </span>
                         </div>

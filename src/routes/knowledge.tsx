@@ -23,7 +23,7 @@ export const KnowledgePage = () => {
                 </button>
             </section>
 
-            <section className=" border rounded-xl">
+            <section className=" border border-gray-300 rounded-xl">
                 <ul>
                     {
                         fakeData.map(file => (

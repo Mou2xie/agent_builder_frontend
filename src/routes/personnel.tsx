@@ -77,19 +77,19 @@ export const PersonnelPage = () => {
             <form className=" flex flex-col gap-5 w-1/2" onSubmit={handleSubmit}>
                 <label className=" flex flex-col gap-2">
                     <span className=" text-primary text-sm">Agent Name</span>
-                    <input className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="text" id="agentName" name="agentName" onChange={handleChange} value={formData.agentName} />
+                    <input className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="text" id="agentName" name="agentName" onChange={handleChange} value={formData.agentName} />
                 </label>
                 <label className=" flex flex-col gap-2">
                     <span className=" text-primary text-sm">Personnel</span>
-                    <textarea name="personnel" id="personnel" className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.personnel}></textarea>
+                    <textarea name="personnel" id="personnel" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.personnel}></textarea>
                 </label>
                 <label className=" flex flex-col gap-2">
                     <span className=" text-primary text-sm">Job Description</span>
-                    <textarea name="jobDescription" id="jobDescription" className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.jobDescription}></textarea>
+                    <textarea name="jobDescription" id="jobDescription" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.jobDescription}></textarea>
                 </label>
                 <label className=" flex flex-col gap-2">
                     <span className=" text-primary text-sm">Goals</span>
-                    <textarea name="goals" id="goals" className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.goals}></textarea>
+                    <textarea name="goals" id="goals" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.goals}></textarea>
                 </label>
                 <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer">{
                     mutation.isPending ? 'Saving...' : 'Save'
