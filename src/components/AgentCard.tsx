@@ -8,11 +8,12 @@ import avatar from "../assets/yong.png"
 interface AgentCardProps {
     id: string;
     name: string;
+    personnel: string;
     job_description: string;
     status: string;
 }
 
-export const AgentCard = ({ id, name, job_description, status }: AgentCardProps) => {
+export const AgentCard = ({ id, name, personnel, job_description, status }: AgentCardProps) => {
     const navigate = useNavigate();
     return (
         <div key={id} className=" bg-white shadow shadow-gray-200 rounded-xl px-8 pt-8">
@@ -23,7 +24,8 @@ export const AgentCard = ({ id, name, job_description, status }: AgentCardProps)
                 </div>
             </section>
             <p className="text-xl font-semibold text-primary mt-6">{name}</p>
-            <p className="text-gray-400 text-sm clamp-2-fixed mt-1 mb-6">{job_description}</p>
+            <p className=" text-gray-600 text-sm clamp-1-fixed mb-3">{personnel}</p>
+            <p className="text-gray-400 text-sm clamp-2-fixed mb-6">{job_description}</p>
             <div className=" flex items-center gap-5 py-5 border-t border-gray-100">
                 <Settings size={22} className=" text-gray-400 cursor-pointer hover:text-gray-600 transition-colors duration-200"
                     onClick={() => navigate(`/dashboard/agent/${id}/personnel`)} />

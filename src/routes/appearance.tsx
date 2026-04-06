@@ -1,14 +1,60 @@
 import { useParams } from "react-router"
 import { useState } from "react"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { supabaseClient } from "../libs/supabaseClient";
 
 export const AppearancePage = () => {
 
     const { id } = useParams();
+    const queryClient = useQueryClient();
+
+    const query = useQuery({
+        queryKey: ['agent-appearance', id],
+        queryFn: async () => {
+            const { data, error } = await supabaseClient.from('agents')
+                .select('id,theme_color,welcome_message,tone')
+                .eq('id', id)
+                .single();
+
+            if (error) {
+                throw new Error(error.message);
+            }
+            
+            setFormData({
+                themeColour: data?.theme_color ?? "",
+                welcomeMessage: data?.welcome_message ?? "",
+                tone: data?.tone ?? "",
+            });
+
+            return data;
+          }
+    });
+
+    const mutation = useMutation({
+        mutationFn:async () =>{
+            const { error } = await supabaseClient.from('agents')
+                .update({
+                    theme_color: formData.themeColour,
+                    welcome_message: formData.welcomeMessage,
+                    tone: formData.tone,
+                })
+                .eq('id', id)
+                .select('id')
+                .single();
+                
+            if (error) {
+                throw new Error(error.message);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['agent-appearance', id] });
+        }
+    });
 
     const [formData, setFormData] = useState({
-        themeColour: "#8B5CF6",
+        themeColour: "",
         welcomeMessage: "",
-        tone: "formal",
+        tone: "",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -21,6 +67,7 @@ export const AppearancePage = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        mutation.mutate();
     }
 
     return (
@@ -48,7 +95,11 @@ export const AppearancePage = () => {
                         <option value="neutral">Neutral</option>
                     </select>
                 </label>
-                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer">Save</button>
+                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer" onClick={handleSubmit}>
+                    {
+                        mutation.isPending ? "Saving..." : "Save"
+                    }
+                </button>
             </form>
         </div>
     )

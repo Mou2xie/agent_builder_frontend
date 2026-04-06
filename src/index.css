@@ -14,6 +14,18 @@ body {
     @apply font-body bg-background;
 }
 
+.clamp-1-fixed {
+    line-height: 1.25rem;
+    height: calc(1.25rem * 1);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
 .clamp-2-fixed {
     line-height: 1.25rem;
     height: calc(1.25rem * 2);

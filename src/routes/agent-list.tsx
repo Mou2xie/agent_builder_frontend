@@ -20,7 +20,7 @@ export const AgentListPage = () => {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ["agent-list"],
         queryFn: async () => {
-            const { data, error } = await supabaseClient.from("agents").select("id,name,job_description,status");
+            const { data, error } = await supabaseClient.from("agents").select("id,name,personnel,job_description,status");
             if (error) {
                 throw new Error(error.message);
             }
@@ -30,12 +30,27 @@ export const AgentListPage = () => {
 
     const mutation = useMutation({
         mutationFn: async () => {
-            const { data, error } = await supabaseClient.from("agents").insert({ name: "New Agent", user_id: user?.id }).select("id").single();
+            const { data, error } = await supabaseClient.from("agents")
+                .insert({
+                    user_id: user?.id,
+                    name: "New Agent",
+                    status: "STANDBY",
+                    theme_color:"#3B82F6",
+                    welcome_message:"Hello, nice to meet you! How can I assist you today?",
+                    tone:"casual",
+                    personnel:"I am a helpful assistant.",
+                    job_description:"Assist users with their tasks and answer their questions.",
+                    goals:" Provide accurate and helpful information to users."
+                })
+                .select("id")
+                .single();
+
             if (error) {
                 throw new Error(error.message);
             }
             return data;
         },
+
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ["agent-list"] });
             navigate(`/dashboard/agent/${data.id}/personnel`);
