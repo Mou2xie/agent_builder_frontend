@@ -16,7 +16,7 @@ export const PersonnelPage = () => {
     });
 
     const query = useQuery({
-        queryKey: ['agent', id],
+        queryKey: ['agent-personnel', id],
         queryFn: async () => {
             const { data, error } = await supabaseClient.from('agents')
                 .select('id,name,personnel,job_description,goals')
@@ -26,7 +26,7 @@ export const PersonnelPage = () => {
             if (error) {
                 throw new Error(error.message);
             }
-
+            
             setFormData({
                 agentName: data?.name ?? "",
                 personnel: data?.personnel ?? "",
@@ -56,7 +56,7 @@ export const PersonnelPage = () => {
             }
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['agent', id] });
+            queryClient.invalidateQueries({ queryKey: ['agent-personnel', id] });
         }
     });
 
@@ -71,9 +71,9 @@ export const PersonnelPage = () => {
     }
 
     return (
-        <div className="grow px-20 py-10 bg-white">
+        <div className="grow px-20 py-8 bg-white">
             <h1 className=" text-2xl font-semibold text-primary">Personnel</h1>
-            <p className=" text-gray-600 mb-10">Give your agent a basic profile information.</p>
+            <p className=" text-gray-600 mb-8">Give your agent a basic profile information.</p>
             <form className=" flex flex-col gap-5 w-1/2" onSubmit={handleSubmit}>
                 <label className=" flex flex-col gap-2">
                     <span className=" text-primary text-sm">Agent Name</span>

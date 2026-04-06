@@ -4,8 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabaseClient } from "../libs/supabaseClient";
 import { AgentCard } from "../components/AgentCard";
 
-import { Plus } from 'lucide-react';
-import { Settings } from 'lucide-react';
+import { Plus, Settings } from 'lucide-react';
 
 
 export const AgentListPage = () => {
@@ -19,7 +18,7 @@ export const AgentListPage = () => {
     }
 
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ["agents"],
+        queryKey: ["agent-list"],
         queryFn: async () => {
             const { data, error } = await supabaseClient.from("agents").select("id,name,job_description,status");
             if (error) {
@@ -38,7 +37,7 @@ export const AgentListPage = () => {
             return data;
         },
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["agents"] });
+            queryClient.invalidateQueries({ queryKey: ["agent-list"] });
             navigate(`/dashboard/agent/${data.id}/personnel`);
         }
     });
