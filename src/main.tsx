@@ -19,8 +19,10 @@ import { KnowledgePage } from "./routes/knowledge"
 import { ActionsPage } from "./routes/actions"
 import { AppearancePage } from "./routes/appearance"
 import { SharePage } from './routes/share'
+import { ChatPage } from './routes/chat'
 
 const queryClient = new QueryClient();
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -49,6 +51,9 @@ createRoot(document.getElementById('root')!).render(
                 <Route path='share' element={<SharePage />} />
               </Route>
             </Route>
+
+            {/* chat page */}
+            <Route path='chat/:id' element={<ChatPage />} />
 
           </Route>
         </Routes>
