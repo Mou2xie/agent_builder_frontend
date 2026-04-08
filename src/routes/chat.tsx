@@ -1,11 +1,45 @@
-import { useParams } from "react-router";
+import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
+import { useState } from 'react';
 
 export const ChatPage = () => {
-    const { id } = useParams();
+    const { messages, sendMessage, status } = useChat({
+        transport: new DefaultChatTransport({
+            api: 'http://127.0.0.1:8787/',
+        }),
+    });
+    const [input, setInput] = useState('');
 
     return (
         <>
-            chat page - {id}
+            {messages.map(message => (
+                <div key={message.id}>
+                    {message.role === 'user' ? 'User: ' : 'AI: '}
+                    {message.parts.map((part, index) =>
+                        part.type === 'text' ? <span key={index}>{part.text}</span> : null,
+                    )}
+                </div>
+            ))}
+
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    if (input.trim()) {
+                        sendMessage({ text: input });
+                        setInput('');
+                    }
+                }}
+            >
+                <input
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    disabled={status !== 'ready'}
+                    placeholder="Say something..."
+                />
+                <button type="submit" disabled={status !== 'ready'}>
+                    Submit
+                </button>
+            </form>
         </>
     );
 }
