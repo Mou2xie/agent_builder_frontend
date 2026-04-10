@@ -12,26 +12,20 @@ export const KnowledgePage = () => {
   const query = useQuery({
     queryKey: ["files", id],
     queryFn: async () => {
-
       const { data, error } = await supabaseClient.storage
         .from("files")
         .list(`${id}`, { limit: 100 });
-
       if (error) throw error;
-
       return data ?? [];
     }
   });
 
   const uploadMutation = useMutation({
     mutationFn: async (file: File) => {
-
       const filePath = `${id}/${Date.now()}-${file.name}`;
-
       const { error } = await supabaseClient.storage
         .from("files")
         .upload(filePath, file);
-
       if (error) throw error;
     },
 
@@ -42,11 +36,9 @@ export const KnowledgePage = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (fileName: string) => {
-
       const { error } = await supabaseClient.storage
         .from("files")
         .remove([`${id}/${fileName}`]);
-
       if (error) throw error;
     },
 
@@ -71,7 +63,6 @@ export const KnowledgePage = () => {
         Manage your agent's knowledge base.
       </p>
 
-      {/* 上传 */}
       <section className="mb-5">
         <input
           type="file"
@@ -79,7 +70,6 @@ export const KnowledgePage = () => {
           className="hidden"
           onChange={fileUploadHandler}
         />
-
         <label
           htmlFor="file-upload"
           className="ml-auto px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-2 cursor-pointer w-fit"
@@ -89,7 +79,6 @@ export const KnowledgePage = () => {
         </label>
       </section>
 
-      {/* 列表 */}
       <section className="border border-gray-300 rounded-xl">
         <ul>
           {query.isLoading && (
@@ -110,7 +99,7 @@ export const KnowledgePage = () => {
               className="p-5 border-b border-gray-200 last:border-0 flex items-center gap-3"
             >
               <File className="text-primary" size={20} />
-              <span className="text-primary">{file.name}</span>
+              <span className="text-primary">{file.name.replace(/^\d+-/, "")}</span>
 
               <Trash2
                 size={20}
