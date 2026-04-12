@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { supabaseClient } from "../libs/supabaseClient";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuthStore } from "../stores/useAuthStore";
 
 import { Upload, File, Trash2 } from "lucide-react";
 
@@ -8,10 +9,12 @@ export const KnowledgePage = () => {
 
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const user = useAuthStore(state => state.user);
 
   const query = useQuery({
     queryKey: ["files", id],
     queryFn: async () => {
+      // get list of files for this agent
       const { data, error } = await supabaseClient.storage
         .from("files")
         .list(`${id}`, { limit: 100 });
@@ -23,25 +26,40 @@ export const KnowledgePage = () => {
   const uploadMutation = useMutation({
     mutationFn: async (file: File) => {
       const filePath = `${id}/${Date.now()}-${file.name}`;
-      const { error } = await supabaseClient.storage
+      // upload file to supabase storage
+      const { data, error } = await supabaseClient.storage
         .from("files")
         .upload(filePath, file);
       if (error) throw error;
-    },
 
-    onSuccess: () => {
+      // trigger RAG processing 
+      fetch(`${import.meta.env.VITE_GAG_SERVICE_URL}/${data.path}/${user?.id}`, {
+        method: "POST",
+        headers: {
+          "X-API-Key": import.meta.env.VITE_SERVICE_API_KEY
+        }
+      });
+    },
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["files", id] });
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (fileName: string) => {
+      // delete file from supabase storage
       const { error } = await supabaseClient.storage
         .from("files")
         .remove([`${id}/${fileName}`]);
       if (error) throw error;
-    },
 
+      // delete contents in vector database for this file
+      const res = await supabaseClient.from("documents")
+        .delete()
+        .eq("agent_id", id)
+        .eq("file_name", fileName);
+      if (res.error) throw res.error;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["files", id] });
     },
@@ -99,7 +117,8 @@ export const KnowledgePage = () => {
               className="p-5 border-b border-gray-200 last:border-0 flex items-center gap-3"
             >
               <File className="text-primary" size={20} />
-              <span className="text-primary">{file.name.replace(/^\d+-/, "")}</span>
+              {/* <span className="text-primary">{file.name.replace(/^\d+-/, "")}</span> */}
+              <span className="text-primary">{file.name}</span>
 
               <Trash2
                 size={20}
