@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useState } from "react";
 
-import { Upload, File, Trash2, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload, File, Trash2, Loader2, CheckCircle, AlertCircle, RotateCcw } from "lucide-react";
 
 export const KnowledgePage = () => {
   const { id } = useParams();
@@ -80,6 +80,23 @@ export const KnowledgePage = () => {
       )
       .subscribe();
   };
+
+  const retryMutation = useMutation({
+    mutationFn: async (fileName: string) => {
+      const res = await fetch(`${import.meta.env.VITE_GAG_SERVICE_URL}/${id}/${fileName}/${user?.id}`, {
+        method: "POST",
+        headers: {
+          "X-API-Key": import.meta.env.VITE_SERVICE_API_KEY
+        }
+      });
+      if (!res.ok) throw new Error("Failed to trigger vectorization");
+      const { task_id } = await res.json();
+      return { taskId: task_id, fileName };
+    },
+    onSuccess: ({ taskId, fileName }) => {
+      subscribeToTask(taskId, fileName);
+    },
+  });
 
   const deleteMutation = useMutation({
     mutationFn: async (fileName: string) => {
@@ -159,6 +176,16 @@ export const KnowledgePage = () => {
                   {(currentStatus === 'pending' || currentStatus === 'processing') && <span className="text-gray-500 flex items-center gap-1"><Loader2 size={14} className="animate-spin" /> Vectorizing...</span>}
                   {currentStatus === 'completed' && <span className="text-green-500 flex items-center gap-1"><CheckCircle size={14} /> Ready</span>}
                   {currentStatus === 'failed' && <span className="text-red-500 flex items-center gap-1"><AlertCircle size={14} /> Failed</span>}
+                  {currentStatus === 'failed' && (
+                    <button
+                      className="ml-1 text-red-400 hover:text-red-600 transition-colors duration-200 disabled:opacity-50"
+                      onClick={() => retryMutation.mutate(file.name)}
+                      disabled={retryMutation.isPending}
+                      title="Retry vectorization"
+                    >
+                      {retryMutation.isPending ? <Loader2 size={14} className="animate-spin" /> : <RotateCcw size={14} />}
+                    </button>
+                  )}
                 </div>
 
                 <span className="ml-auto text-gray-400 shrink-0">

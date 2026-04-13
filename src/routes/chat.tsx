@@ -3,14 +3,17 @@ import { DefaultChatTransport } from 'ai';
 import { useEffect, useRef, useState } from 'react';
 import { Chatbar } from '../components/Chatbar';
 import { Send } from 'lucide-react';
+import { useParams } from 'react-router';
 
 export const ChatPage = () => {
 
+    const { id } = useParams();
+    const api = `${import.meta.env.VITE_CHAT_API}/${id}`;
+
     const { messages, sendMessage, status } = useChat({
-        transport: new DefaultChatTransport({
-            api: import.meta.env.VITE_CHAT_API,
-        }),
+        transport: new DefaultChatTransport({ api }),
     });
+    const isAiResponding = status === 'submitted' || status === 'streaming';
     const [input, setInput] = useState('');
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -31,7 +34,7 @@ export const ChatPage = () => {
             top: container.scrollHeight,
             behavior: 'smooth',
         });
-    }, [messages]);
+    }, [messages, isAiResponding]);
 
     useEffect(() => {
         if (status !== 'ready') return;
@@ -56,6 +59,17 @@ export const ChatPage = () => {
                     </div>
 
                 ))}
+                {isAiResponding && (
+                    <div className=" m-5 flex justify-start">
+                        <div className=" px-4 py-2 rounded-lg bg-slate-100 text-primary flex items-center gap-2">
+                            <span className=" inline-flex gap-1" aria-hidden="true">
+                                <span className=" w-1.5 h-1.5 rounded-full bg-primary animate-pulse [animation-delay:0ms]" />
+                                <span className=" w-1.5 h-1.5 rounded-full bg-primary animate-pulse [animation-delay:150ms]" />
+                                <span className=" w-1.5 h-1.5 rounded-full bg-primary animate-pulse [animation-delay:300ms]" />
+                            </span>
+                        </div>
+                    </div>
+                )}
             </div>
             <form className=' max-w-3xl mx-auto flex items-end w-full min-h-14 bg-white border-gray-100 shadow-sm p-5 rounded-lg '
                 onSubmit={e => {

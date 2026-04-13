@@ -1,7 +1,28 @@
 import { Link, QrCode, Copy } from 'lucide-react';
+import { useParams } from 'react-router';
 
 
 export const SharePage = () => {
+    const { id } = useParams();
+    const shareLink = `${window.location.origin}/chat/${id ?? ''}`;
+
+    const handleCopyLink = async () => {
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(shareLink);
+            return;
+        }
+
+        const textArea = document.createElement('textarea');
+        textArea.value = shareLink;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    };
+
     return (
         <div className="grow px-20 py-8 bg-white">
             <h1 className=" text-2xl font-semibold text-primary">Share</h1>
@@ -13,8 +34,13 @@ export const SharePage = () => {
                         Link
                         </h2>
                     <p className=" px-5 py-2 bg-slate-200 rounded-xl flex items-center gap-3 ">
-                        <span className=' text-primary'>https://example.com</span>
-                        <Copy size={18} className=" text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200" />
+                        <span className=' text-primary'>{shareLink}</span>
+                        <Copy
+                            size={18}
+                            onClick={() => void handleCopyLink()}
+                            aria-label="Copy link"
+                            className=" text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                        />
                     </p>
                 </div>
                 <div>
