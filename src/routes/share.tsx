@@ -48,7 +48,7 @@ export const SharePage = () => {
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
                     <h1 className=" text-3xl font-semibold text-primary">Share</h1>
-                    <p className=" text-gray-400 mt-1">Share your agent with others</p>
+                    <p className=" text-gray-400 mt-1">Distribute your agent — copy a shareable link or download a QR code so others can access it right away."</p>
                 </div>
             </section>
 

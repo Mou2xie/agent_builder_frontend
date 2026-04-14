@@ -75,7 +75,7 @@ export const BehaviorPage = () => {
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
                     <h1 className=" text-3xl font-semibold text-primary">Behavior</h1>
-                    <p className=" text-gray-400 mt-1">Adjust how your agent behaves</p>
+                    <p className=" text-gray-400 mt-1">Control how your agent behaves in conversations — from the first greeting to the overall communication style."</p>
                 </div>
             </section>
 
