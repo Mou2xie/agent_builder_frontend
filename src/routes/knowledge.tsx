@@ -126,28 +126,42 @@ export const KnowledgePage = () => {
 
   return (
     <div className="grow px-20 py-8 bg-white">
-      <h1 className="text-2xl font-semibold text-primary">Knowledge</h1>
-      <p className="text-gray-600">
-        Manage your agent's knowledge base.
-      </p>
-
-      <section className="mb-5">
-        <input
-          type="file"
-          id="file-upload"
-          className="hidden"
-          accept=".pdf,.txt,.docx"
-          onChange={fileUploadHandler}
-          disabled={uploadMutation.isPending}
-        />
-        <label
-          htmlFor="file-upload"
-          className={`ml-auto px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-2 cursor-pointer w-fit ${uploadMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
-        >
-          {uploadMutation.isPending ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
-          {uploadMutation.isPending ? "Uploading..." : "Upload File"}
-        </label>
+      <section className=" flex justify-between items-end gap-20 mb-10">
+        <div>
+          <h1 className="text-3xl font-semibold text-primary">Knowledge Base</h1>
+          <p className="text-gray-400 mt-1">
+            Teach your agent by uploading documents. Your agent will use what it learns to respond more accurately to questions.
+          </p>
+        </div>
+        <section className=" shrink-0">
+          <input
+            type="file"
+            id="file-upload"
+            className="hidden"
+            accept=".pdf,.txt,.docx"
+            onChange={fileUploadHandler}
+            disabled={uploadMutation.isPending}
+          />
+          <div className="ml-auto w-fit">
+            <label
+              htmlFor="file-upload"
+              className={`px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-3 cursor-pointer w-fit ${uploadMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {uploadMutation.isPending ? <Loader2 size={22} className="animate-spin" /> : <Upload size={22} />}
+              <span>
+                <p>{uploadMutation.isPending ? "Uploading..." : "Upload Document"}</p>
+                <p className="text-[10px]">PDF, DOCX, TXT</p>
+              </span>
+            </label>
+          </div>
+        </section>
       </section>
+      {(uploadMutation.isPending || Object.values(taskStatuses).some(s => s === 'pending' || s === 'processing')) && (
+        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-2 text-sm text-amber-600">
+          <Loader2 size={16} className="animate-spin shrink-0" />
+          <span>Your document is being uploaded and learned. This may take several minutes depending on the file size. Please wait on this page.</span>
+        </div>
+      )}
 
       <section className="border border-gray-300 rounded-xl">
         <ul>
@@ -165,7 +179,7 @@ export const KnowledgePage = () => {
             return (
               <li
                 key={file.name}
-                className="p-5 border-b border-gray-200 last:border-0 flex items-center gap-3"
+                className="px-5 py-3 border-b border-gray-200 last:border-0 flex items-center gap-3"
               >
                 <File className="text-primary" size={20} />
                 <span className="text-primary truncate max-w-75" title={file.name}>

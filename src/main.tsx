@@ -16,8 +16,8 @@ import { SignupPage } from './routes/signup'
 import { AgentListPage } from "./routes/agent-list"
 import { PersonnelPage } from "./routes/personnel"
 import { KnowledgePage } from "./routes/knowledge"
-import { ActionsPage } from "./routes/actions"
-import { AppearancePage } from "./routes/appearance"
+import { RulePage } from "./routes/rule"
+import { BehaviorPage } from "./routes/behavior"
 import { SharePage } from './routes/share'
 import { ChatPage } from './routes/chat'
 
@@ -46,8 +46,8 @@ createRoot(document.getElementById('root')!).render(
               <Route path='agent/:id' element={<DashboardLayout />} >
                 <Route path='personnel' element={<PersonnelPage />} />
                 <Route path='knowledge' element={<KnowledgePage />} />
-                <Route path='actions' element={<ActionsPage />} />
-                <Route path='appearance' element={<AppearancePage />} />
+                <Route path='rule' element={<RulePage />} />
+                <Route path='behavior' element={<BehaviorPage />} />
                 <Route path='share' element={<SharePage />} />
               </Route>
             </Route>

@@ -33,14 +33,14 @@ export const DashboardLayout = () => {
                             <p className="group-hover:text-primary transition-colors duration-200">Knowledge</p>
                         </NavLink>
 
-                        <NavLink to={`/dashboard/agent/${id}/actions`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
+                        <NavLink to={`/dashboard/agent/${id}/rule`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
                             <Goal size={32} className=" mx-auto group-hover:text-primary transition-colors duration-200" />
-                            <p className="group-hover:text-primary transition-colors duration-200">Actions</p>
+                            <p className="group-hover:text-primary transition-colors duration-200">Rule</p>
                         </NavLink>
 
-                        <NavLink to={`/dashboard/agent/${id}/appearance`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
+                        <NavLink to={`/dashboard/agent/${id}/behavior`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
                             <Paintbrush size={32} className=" mx-auto group-hover:text-primary transition-colors duration-200" />
-                            <p className="group-hover:text-primary transition-colors duration-200">Appearance</p>
+                            <p className="group-hover:text-primary transition-colors duration-200">Behavior</p>
                         </NavLink>
 
                         <NavLink to={`/dashboard/agent/${id}/share`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>

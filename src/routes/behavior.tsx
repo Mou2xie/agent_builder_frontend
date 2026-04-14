@@ -3,13 +3,13 @@ import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { supabaseClient } from "../libs/supabaseClient";
 
-export const AppearancePage = () => {
+export const BehaviorPage = () => {
 
     const { id } = useParams();
     const queryClient = useQueryClient();
 
     const query = useQuery({
-        queryKey: ['agent-appearance', id],
+        queryKey: ['agent-behavior', id],
         queryFn: async () => {
             const { data, error } = await supabaseClient.from('agents')
                 .select('id,theme_color,welcome_message,tone')
@@ -19,7 +19,7 @@ export const AppearancePage = () => {
             if (error) {
                 throw new Error(error.message);
             }
-            
+
             setFormData({
                 themeColour: data?.theme_color ?? "",
                 welcomeMessage: data?.welcome_message ?? "",
@@ -27,11 +27,11 @@ export const AppearancePage = () => {
             });
 
             return data;
-          }
+        }
     });
 
     const mutation = useMutation({
-        mutationFn:async () =>{
+        mutationFn: async () => {
             const { error } = await supabaseClient.from('agents')
                 .update({
                     theme_color: formData.themeColour,
@@ -41,13 +41,13 @@ export const AppearancePage = () => {
                 .eq('id', id)
                 .select('id')
                 .single();
-                
+
             if (error) {
                 throw new Error(error.message);
             }
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['agent-appearance', id] });
+            queryClient.invalidateQueries({ queryKey: ['agent-behavior', id] });
         }
     });
 
@@ -57,7 +57,7 @@ export const AppearancePage = () => {
         tone: "",
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -72,29 +72,47 @@ export const AppearancePage = () => {
 
     return (
         <div className="grow px-20 py-8 bg-white">
-            <h1 className=" text-2xl font-semibold text-primary">Appearance</h1>
-            <p className=" text-gray-600 mb-8">Adjust how your agent looks</p>
-            <form className=" flex flex-col gap-5 w-1/2" onSubmit={handleSubmit}>
-                <div className=" flex justify-between items-center">
+            <section className=" flex justify-between items-end gap-20 mb-10">
+                <div>
+                    <h1 className=" text-3xl font-semibold text-primary">Behavior</h1>
+                    <p className=" text-gray-400 mt-1">Adjust how your agent behaves</p>
+                </div>
+            </section>
+
+            <form className=" flex flex-col gap-5 w-3/5" onSubmit={handleSubmit}>
+                {/* <div className=" flex justify-between items-center">
                     <label className=" flex flex-col gap-2">
                         <span className=" text-primary text-sm">Theme Colour</span>
                         <input type="text" id="themeColour" name="themeColour" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.themeColour} />
                     </label>
                     <div className="w-15 h-15 rounded-full" style={{ backgroundColor: formData.themeColour }}></div>
-                </div>
+                </div> */}
 
                 <label className=" flex flex-col gap-2 ">
                     <span className=" text-primary text-sm">Welcome Message</span>
                     <textarea name="welcomeMessage" id="welcomeMessage" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.welcomeMessage}></textarea>
                 </label>
-                <label className=" flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                     <span className=" text-primary text-sm">Tone</span>
-                    <select name="tone" id="tone" className=" border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.tone}>
-                        <option value="professional">Professional</option>
-                        <option value="casual">Casual</option>
-                        <option value="neutral">Neutral</option>
-                    </select>
-                </label>
+                    <div className="flex gap-4">
+                        {(["professional", "casual", "neutral"] as const).map((tone) => (
+                            <label
+                                key={tone}
+                                className={`flex-1 rounded-lg px-4 py-3 text-center cursor-pointer transition-all duration-200 ${formData.tone === tone ? "bg-white border-2 border-primary text-primary" : "border border-gray-400 text-gray-400"}`}
+                            >
+                                <input
+                                    type="radio"
+                                    name="tone"
+                                    value={tone}
+                                    checked={formData.tone === tone}
+                                    onChange={handleChange}
+                                    className="hidden"
+                                />
+                                <span className="text-sm font-medium capitalize">{tone}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
                 <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer" onClick={handleSubmit}>
                     {
                         mutation.isPending ? "Saving..." : "Save"
