@@ -1,38 +1,36 @@
 import { NavLink } from "react-router"
 import { useAuthStore } from "../stores/useAuthStore"
 import {
-  Blocks,
-  Ghost,
-  Zap,
+  MessageSquare,
+  Brain,
+  Target,
   Database,
   MousePointerClick,
   Share2,
   PenTool,
   Store,
   GraduationCap,
-  BarChart3,
-  ShieldCheck,
   ArrowRight,
 } from "lucide-react"
 
-const PAIN_POINTS = [
+const CORE_CAPABILITIES = [
   {
-    icon: Blocks,
-    title: "High Technical Friction",
-    subtitle: "技术门槛太高",
-    description: "无需了解 API 知识，告别复杂的提示词工程。",
+    icon: MessageSquare,
+    title: "24/7 Digital Concierge",
+    description:
+      "Act as a tireless business assistant. Automatically handle repetitive inquiries, provide personalized recommendations, reduce user friction, and directly increase conversion rates.",
   },
   {
-    icon: Ghost,
-    title: "Hallucination & Generic Tone",
-    subtitle: "空洞与幻觉",
-    description: "告别机器人式的套话。用你自己的事实和语气为 AI 注入灵魂。",
+    icon: Brain,
+    title: "Your Expert Digital Twin",
+    description:
+      "Break the limits of static documents. Transform your private data into a highly accurate, interactive help desk that perfectly replicates your professional expertise and tone of voice.",
   },
   {
-    icon: Zap,
-    title: "The Action Gap",
-    subtitle: "缺乏行动力",
-    description: "打破被动聊天。主动引导用户，实现具体的业务转化。",
+    icon: Target,
+    title: "Intent-Driven Engine",
+    description:
+      "Move beyond passive chatting. Accurately recognize user intent to seamlessly push payment links, booking forms, and other business hooks within the conversation, completing the transaction loop.",
   },
 ]
 
@@ -40,26 +38,23 @@ const STEPS = [
   {
     icon: Database,
     step: "01",
-    title: "Private Knowledge Base",
-    subtitle: "注入私有灵魂",
+    title: "Infuse Private Knowledge",
     description:
-      "支持上传 PDF、DOCX、CSV 或 TXT 文件。完全基于你的私有数据构建 AI 的知识大脑。",
+      "Upload PDF, DOCX, or TXT files. Build your AI's knowledge brain entirely from your private data.",
   },
   {
     icon: MousePointerClick,
     step: "02",
-    title: "Intent-Driven Hooks",
-    subtitle: "设定业务钩子",
+    title: "Set Business Hooks",
     description:
-      "零代码配置触发动作。当用户询问价格或服务时，自动推送支付链接或预订表单。",
+      "Configure trigger actions. Push payment links or booking forms based on user intent.",
   },
   {
     icon: Share2,
     step: "03",
     title: "Easy Distribution",
-    subtitle: "一键极简分发",
     description:
-      "即刻部署。通过独立网页链接、二维码分享，或以代码片段直接嵌入你的网站。",
+      "Deploy instantly. Share your solution seamlessly via standalone web links or custom QR codes.",
   },
 ]
 
@@ -67,40 +62,23 @@ const USE_CASES = [
   {
     icon: PenTool,
     title: "Knowledge Creators",
-    subtitle: "知识创作者",
+    subtitle: "For Creators",
     description:
-      "打造 24/7 在线的「数字分身」，处理粉丝问答，全天候扩展个人品牌。",
+      "Build a 24/7 online digital twin to handle fan Q&A and scale your personal brand around the clock.",
   },
   {
     icon: Store,
     title: "SMB Owners",
-    subtitle: "中小企业主",
+    subtitle: "For SMB Owners",
     description:
-      "创建不知疲倦的产品向导，解答重复咨询，降低交易摩擦并提升转化率。",
+      "Create a tireless product guide that answers repetitive inquiries, reduces transaction friction, and boosts conversion rates.",
   },
   {
     icon: GraduationCap,
     title: "Subject Matter Experts",
-    subtitle: "行业专家",
+    subtitle: "For Experts",
     description:
-      "将海量静态文档转化为高准确度的互动帮助台，为团队或客户提供精准解答。",
-  },
-]
-
-const ADVANCED_FEATURES = [
-  {
-    icon: BarChart3,
-    title: "Data Dashboard & Insights",
-    subtitle: "数据看板与洞察",
-    description:
-      "自动聚合用户查询并提取核心意图，用真实数据驱动你的运营决策。",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Guardrails & Safety",
-    subtitle: "安全边界护栏",
-    description:
-      "设置严格的话术边界与自定义兜底响应，确保品牌内容输出的绝对安全。",
+      "Transform massive static documents into a highly accurate interactive help desk, delivering precise answers for your team or clients.",
   },
 ]
 
@@ -118,11 +96,11 @@ export const IndexPage = () => {
               <span>your way.</span>
             </h1>
             <p className="mt-2 text-lg text-text-secondary">
-              构建你的专属 AI 代理，零代码，全连接。
+              Create a your own AI agent in minutes with a custom knowledge base. Zero coding required.
             </p>
             <div className="mt-10 flex items-center gap-4">
               <NavLink
-                to={ user ? "/dashboard/agent-list" : "/signup" }
+                to={user ? "/dashboard/agent-list" : "/signup"}
                 className="inline-flex items-center px-8 py-2.5 text-base font-semibold bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 cursor-pointer"
               >
                 Get Started
@@ -135,99 +113,54 @@ export const IndexPage = () => {
         </div>
       </section>
 
-      <section className="py-24">
-        <div className="max-w-5xl mx-auto px-6">
+      <section className="py-28">
+        <div className="max-w-4xl mx-auto px-6">
           <h2 className="font-heading text-3xl font-bold text-center text-text-main">
-            为什么你需要 Build My Agent？
+            What Build My Agent Can Do
           </h2>
-          <p className="mt-2 text-center text-text-muted text-base">Why You Need Build My Agent</p>
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {PAIN_POINTS.map((item) => (
+          <p className="mt-2 text-center text-text-muted text-base">
+            Transform your expertise into an active, 24/7 interactive experience.
+          </p>
+          <div className="mt-16 divide-y divide-border-light">
+            {CORE_CAPABILITIES.map((item) => (
               <div
                 key={item.title}
-                className="bg-background-card shadow-card-soft rounded-xl p-8"
+                className="group flex items-start gap-6 py-10 first:pt-0 last:pb-0"
               >
-                <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-primary" />
+                <div className="w-10 h-10 bg-background-hero rounded-full flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary-light transition-colors duration-200">
+                  <item.icon className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="mt-5 text-lg font-semibold text-text-main">{item.title}</h3>
-                <p className="mt-1 text-sm text-text-muted">{item.subtitle}</p>
-                <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
+                <div>
+                  <h3 className="text-lg font-semibold text-text-main">{item.title}</h3>
+                  <p className="mt-2 text-text-secondary leading-relaxed max-w-xl">{item.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="how-it-works" className="bg-background-hero py-24">
+      <section id="how-it-works" className=" bg-background-hero py-28">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="font-heading text-3xl font-bold text-center text-text-main">
             How it Works
           </h2>
-          <p className="mt-2 text-center text-text-muted text-base">运作机制</p>
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <p className="mt-2 text-center text-text-muted text-base">Train. Trigger. Share. It’s that simple.</p>
+          <div className="mt-16 flex flex-col md:flex-row items-start md:items-stretch gap-12 md:gap-0 relative">
+            <div className="hidden md:block absolute top-10 left-[calc(16.67%+20px)] right-[calc(16.67%+20px)] h-px bg-border-light" />
             {STEPS.map((item) => (
               <div
                 key={item.step}
-                className="bg-background-card shadow-card-soft rounded-xl p-8 relative"
+                className="flex-1 flex flex-col items-center text-center relative"
               >
-                <span className="text-5xl font-bold text-primary-light absolute top-6 right-8 select-none">
-                  {item.step}
+                <div className="w-20 h-20 bg-background-card rounded-2xl flex items-center justify-center shrink-0 relative z-10 shadow-card-soft">
+                  <item.icon className="w-8 h-8 text-primary" />
+                </div>
+                <span className="mt-4 text-xs font-semibold tracking-widest text-primary uppercase">
+                  Step {item.step}
                 </span>
-                <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-text-main">{item.title}</h3>
-                <p className="mt-1 text-sm text-text-muted">{item.subtitle}</p>
-                <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="font-heading text-3xl font-bold text-center text-text-main">
-            Use Cases
-          </h2>
-          <p className="mt-2 text-center text-text-muted text-base">应用场景</p>
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {USE_CASES.map((item) => (
-              <div
-                key={item.title}
-                className="bg-background-card shadow-card-soft rounded-xl p-8"
-              >
-                <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-text-main">{item.title}</h3>
-                <p className="mt-1 text-sm text-text-muted">{item.subtitle}</p>
-                <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-background-hero py-24">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="font-heading text-3xl font-bold text-center text-text-main">
-            Advanced Value
-          </h2>
-          <p className="mt-2 text-center text-text-muted text-base">进阶差异化价值</p>
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {ADVANCED_FEATURES.map((item) => (
-              <div
-                key={item.title}
-                className="bg-background-card shadow-card-soft rounded-xl p-8"
-              >
-                <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-text-main">{item.title}</h3>
-                <p className="mt-1 text-sm text-text-muted">{item.subtitle}</p>
-                <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
+                <h3 className="mt-2 text-lg font-semibold text-text-main">{item.title}</h3>
+                <p className="mt-3 text-text-secondary leading-relaxed text-sm max-w-60">{item.description}</p>
               </div>
             ))}
           </div>
@@ -235,11 +168,36 @@ export const IndexPage = () => {
       </section>
 
       <section className="py-28">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="font-heading text-4xl font-bold text-text-main leading-tight">
-            准备好迎接你的 AI 业务伙伴了吗？
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="font-heading text-3xl font-bold text-center text-text-main">
+            Use Cases
           </h2>
-          <p className="mt-2 text-text-muted">Ready to meet your AI business partner?</p>
+          <p className="mt-2 text-center text-text-muted text-base">Built for different needs</p>
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {USE_CASES.map((item) => (
+              <div
+                key={item.title}
+                className="group bg-background-card rounded-2xl border border-border-light p-8 transition-all duration-200 hover:shadow-card-soft hover:border-primary/20"
+              >
+                <div className="w-11 h-11 bg-background-hero rounded-xl flex items-center justify-center group-hover:bg-primary-light transition-colors duration-200">
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <span className="mt-5 block text-xs font-semibold tracking-widest text-primary uppercase">
+                  {item.subtitle}
+                </span>
+                <h3 className="mt-1.5 text-lg font-semibold text-text-main">{item.title}</h3>
+                <p className="mt-3 text-text-secondary leading-relaxed text-sm">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-28 bg-background-hero">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="font-heading text-3xl font-bold text-text-main leading-tight">
+            Ready to meet your AI business partner?
+          </h2>
           <NavLink
             to="/signup"
             className="mt-10 inline-flex items-center gap-2 px-10 py-4 text-base font-semibold bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 cursor-pointer"
