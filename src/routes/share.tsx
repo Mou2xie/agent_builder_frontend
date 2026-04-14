@@ -44,11 +44,11 @@ export const SharePage = () => {
     };
 
     return (
-        <div className="grow px-20 py-8 bg-white">
+        <div className="grow px-20 py-8 bg-background-card">
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
-                    <h1 className=" text-3xl font-semibold text-primary">Share</h1>
-                    <p className=" text-gray-400 mt-1">Distribute your agent — copy a shareable link or download a QR code so others can access it right away."</p>
+                    <h1 className=" text-3xl font-semibold text-text-main">Share</h1>
+                    <p className=" text-text-muted mt-1">Distribute your agent — copy a shareable link or download a QR code so others can access it right away."</p>
                 </div>
             </section>
 
@@ -58,13 +58,13 @@ export const SharePage = () => {
                         <Link size={18} />
                         Link
                     </h2>
-                    <p className=" px-5 py-2 bg-slate-100 rounded-xl flex items-center gap-3 ">
+                    <p className=" px-5 py-2 bg-primary-light rounded-xl flex items-center gap-3 ">
                         <span className=' text-primary'>{shareLink}</span>
                         <Copy
                             size={18}
                             onClick={() => void handleCopyLink()}
                             aria-label="Copy link"
-                            className=" text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                            className=" text-text-muted cursor-pointer hover:text-primary transition-colors duration-200"
                         />
                     </p>
                 </div>
@@ -73,13 +73,13 @@ export const SharePage = () => {
                         <QrCode size={18} />
                         QR Code</h2>
                     <div className=' flex items-end'>
-                        <div className=" p-2 bg-white rounded-xl border border-gray-200">
+                        <div className=" p-2 bg-background-card rounded-xl border border-border-light">
                             <QRCodeSVG id="qr-code-svg" value={shareLink} size={140} />
                         </div>
                         <button
                             onClick={handleDownloadQR}
                             aria-label="Download QR code"
-                            className="flex ml-3 border border-primary items-center gap-1.5 px-3 py-1.5 text-sm text-primary rounded-lg hover:bg-slate-100 transition-colors duration-200 cursor-pointer"
+                            className="flex ml-3 border border-primary items-center gap-2 px-3 py-2 text-sm text-primary rounded-md hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer"
                         >
                             <Download size={16} />
                             Download

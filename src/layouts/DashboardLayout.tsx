@@ -20,32 +20,62 @@ export const DashboardLayout = () => {
         <>
             <Topbar />
             <section className="flex">
-                <aside className="w-26 min-h-screen bg-white border-r border-gray-200 p-10">
+                <aside className="w-26 min-h-screen bg-background-card border-r border-border-light p-10">
                     <nav className="flex flex-col items-center gap-10">
 
-                        <NavLink to={`/dashboard/agent/${id}/personnel`} className={({ isActive }) => ` text-sm space-y-1 ${isActive ? ' text-primary' : ' text-gray-400'}`}>
-                            <BotMessageSquare size={32} className=" mx-auto" />
-                            <p>Personnel</p>
+                        <NavLink to={`/dashboard/agent/${id}/personnel`} className="text-sm flex flex-col items-center gap-1">
+                            {({ isActive }) => (
+                                <>
+                                    <div className={`p-2 rounded-xl ${isActive ? 'bg-primary' : ''}`}>
+                                        <BotMessageSquare size={28} className={`${isActive ? 'text-white' : 'text-text-main'}`} />
+                                    </div>
+                                    <p className={`${isActive ? 'text-primary' : 'text-text-main'}`}>Personnel</p>
+                                </>
+                            )}
                         </NavLink>
 
-                        <NavLink to={`/dashboard/agent/${id}/knowledge`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
-                            <GraduationCap size={32} className=" mx-auto group-hover:text-primary transition-colors duration-200" />
-                            <p className="group-hover:text-primary transition-colors duration-200">Knowledge</p>
+                        <NavLink to={`/dashboard/agent/${id}/knowledge`} className="text-sm flex flex-col items-center gap-1">
+                            {({ isActive }) => (
+                                <>
+                                    <div className={`p-2 rounded-xl ${isActive ? 'bg-primary' : ''}`}>
+                                        <GraduationCap size={28} className={`${isActive ? 'text-white' : 'text-text-main'} transition-colors duration-200`} />
+                                    </div>
+                                    <p className={`${isActive ? 'text-primary' : 'text-text-main'} transition-colors duration-200`}>Knowledge</p>
+                                </>
+                            )}
                         </NavLink>
 
-                        <NavLink to={`/dashboard/agent/${id}/rule`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
-                            <Goal size={32} className=" mx-auto group-hover:text-primary transition-colors duration-200" />
-                            <p className="group-hover:text-primary transition-colors duration-200">Rule</p>
+                        <NavLink to={`/dashboard/agent/${id}/rule`} className="text-sm flex flex-col items-center gap-1">
+                            {({ isActive }) => (
+                                <>
+                                    <div className={`p-2 rounded-xl ${isActive ? 'bg-primary' : ''}`}>
+                                        <Goal size={28} className={`${isActive ? 'text-white' : 'text-text-main'} transition-colors duration-200`} />
+                                    </div>
+                                    <p className={`${isActive ? 'text-primary' : 'text-text-main'} transition-colors duration-200`}>Rule</p>
+                                </>
+                            )}
                         </NavLink>
 
-                        <NavLink to={`/dashboard/agent/${id}/behavior`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
-                            <Paintbrush size={32} className=" mx-auto group-hover:text-primary transition-colors duration-200" />
-                            <p className="group-hover:text-primary transition-colors duration-200">Behavior</p>
+                        <NavLink to={`/dashboard/agent/${id}/behavior`} className="text-sm flex flex-col items-center gap-1">
+                            {({ isActive }) => (
+                                <>
+                                    <div className={`p-2 rounded-xl ${isActive ? 'bg-primary' : ''}`}>
+                                        <Paintbrush size={28} className={`${isActive ? 'text-white' : 'text-text-main'} transition-colors duration-200`} />
+                                    </div>
+                                    <p className={`${isActive ? 'text-primary' : 'text-text-main'} transition-colors duration-200`}>Behavior</p>
+                                </>
+                            )}
                         </NavLink>
 
-                        <NavLink to={`/dashboard/agent/${id}/share`} className={({ isActive }) => `text-sm space-y-1 group ${isActive ? ' text-primary' : ' text-gray-400'}`}>
-                            <Rocket size={32} className=" mx-auto group-hover:text-primary transition-colors duration-200" />
-                            <p className="group-hover:text-primary transition-colors duration-200">Share</p>
+                        <NavLink to={`/dashboard/agent/${id}/share`} className="text-sm flex flex-col items-center gap-1">
+                            {({ isActive }) => (
+                                <>
+                                    <div className={`p-2 rounded-xl ${isActive ? 'bg-primary' : ''}`}>
+                                        <Rocket size={28} className={`${isActive ? 'text-white' : 'text-text-main'} transition-colors duration-200`} />
+                                    </div>
+                                    <p className={`${isActive ? 'text-primary' : 'text-text-main'} transition-colors duration-200`}>Share</p>
+                                </>
+                            )}
                         </NavLink>
 
                     </nav>

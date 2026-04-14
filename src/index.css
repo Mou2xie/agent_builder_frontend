@@ -2,16 +2,40 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #1A1A1A;
-    --color-tertiary: #E0E0E0;
-    --color-background: #f9f9f9;
+    /* 背景色系：采用更干净、更高级的冷感灰白，衬托紫灰与纯黑的质感 */
+    --color-background-base: #F7F7F9;
+    --color-background-card: #FFFFFF;
+    --color-background-hero: #F0F0F4;
+
+    /* 主色调：你指定的稳重紫灰，带有一种优雅和知性的感觉 */
+    --color-primary: #636797;
+    --color-primary-hover: #4E5279;
+    --color-primary-light: #EBEBF1;
+
+    /* 辅助色/强调色：将你指定的极深色（#000503）转化为系统级辅助色，用于勾勒形状或作为强对比按钮 */
+    --color-secondary: #000503;
+    --color-secondary-hover: #1F2321;
+    --color-secondary-light: #E5E6E6;
+
+    /* 文本色系：极具对比度，字迹锐利 */
+    --color-text-main: #000503;
+    --color-text-secondary: #585A6A;
+    --color-text-muted: #9597A8;
+
+    /* 边框与分割线：克制、若有似无 */
+    --color-border-light: #E2E2EA;
+    --color-border-divider: #EAEAEF;
+
+    /* 阴影：重新设计，从原来的大范围模糊改为更凝聚、更具空间感的高级阴影 */
+    --shadow-card-soft: 0 4px 24px rgba(0, 5, 3, 0.04);
+    --shadow-float: 0 16px 32px rgba(99, 103, 151, 0.12);
 
     --font-body: 'Inter', sans-serif;
     --font-heading: 'Comfortaa', cursive;
 }
 
 body {
-    @apply font-body bg-background;
+    @apply font-body bg-background-base text-text-main
 }
 
 .clamp-1-fixed {

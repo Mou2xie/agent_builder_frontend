@@ -47,15 +47,15 @@ export const LoginPage = () => {
 
     return (
         <div className=" min-h-screen flex ">
-            <section className=" grow bg-tertiary">
+            <section className=" grow bg-background-hero">
 
             </section>
             <section className=" w-112.5 p-20 flex flex-col justify-center">
-                <h2 className=" font-heading font-extrabold text-primary text-2xl">Agent Builder</h2>
-                <p className=" text-gray-400">Your AI. Getting things done</p>
+                <h2 className=" font-heading font-extrabold text-text-main text-2xl">Agent Builder</h2>
+                <p className=" text-text-muted">Your AI. Getting things done</p>
                 <form className=" flex flex-col mt-5" onSubmit={submitHandler}>
-                    <input className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="email" name="email" placeholder="Email" value={formData.email} onChange={inputChangeHandler} required />
-                    <input className=" border rounded-lg pl-2 py-2 mt-3 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="password" name="password" value={formData.password} placeholder="Password" onChange={inputChangeHandler} required />
+                    <input className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="email" name="email" placeholder="Email" value={formData.email} onChange={inputChangeHandler} required />
+                    <input className=" border border-border-light rounded-lg pl-2 py-2 mt-3 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="password" name="password" value={formData.password} placeholder="Password" onChange={inputChangeHandler} required />
                     {
                         mutation.isError && (
                             <p className=" bg-red-100 text-red-500 text-sm mt-3 px-2 py-1 rounded">
@@ -67,8 +67,8 @@ export const LoginPage = () => {
                         {mutation.isPending ? "Logging in..." : "Log in"}
                     </button>
                 </form>
-                <p className=" text-gray-400 mt-10 mb-30">
-                    Don't have an account? <NavLink to="/signup" className=" text-gray-600 underline">Sign up</NavLink>
+                <p className=" text-text-muted mt-10 mb-30">
+                    Don't have an account? <NavLink to="/signup" className=" text-text-secondary underline">Sign up</NavLink>
                 </p>
             </section>
 

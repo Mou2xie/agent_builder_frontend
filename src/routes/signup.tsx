@@ -51,12 +51,12 @@ export const SignupPage = () => {
 
     return (
         <div className=" min-h-screen flex justify-center items-center">
-            <div className=" w-130 py-10 px-20 rounded-2xl shadow-sm bg-white">
-                <h2 className=" font-heading font-extrabold text-primary text-xl text-center">Create Account</h2>
+            <div className=" w-130 py-10 px-20 rounded-2xl shadow-card-soft bg-background-card">
+                <h2 className=" font-heading font-extrabold text-text-main text-xl text-center">Create Account</h2>
                 <form className=" flex flex-col mt-5" onSubmit={submitHandler}>
-                    <input className=" border rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="email" name="email" placeholder="Email" value={formData.email} onChange={inputChangeHandler} required />
-                    <input className=" border rounded-lg pl-2 py-2 mt-3 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="password" name="password" value={formData.password} placeholder="Password" onChange={inputChangeHandler} required />
-                    <input className=" border rounded-lg pl-2 py-2 mt-3 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="password" name="confirmPassword" value={formData.confirmPassword} placeholder="Confirm Password" onChange={inputChangeHandler} required />
+                    <input className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="email" name="email" placeholder="Email" value={formData.email} onChange={inputChangeHandler} required />
+                    <input className=" border border-border-light rounded-lg pl-2 py-2 mt-3 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="password" name="password" value={formData.password} placeholder="Password" onChange={inputChangeHandler} required />
+                    <input className=" border border-border-light rounded-lg pl-2 py-2 mt-3 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="password" name="confirmPassword" value={formData.confirmPassword} placeholder="Confirm Password" onChange={inputChangeHandler} required />
                     {
                     mutation.isError && (
                         <p className=" bg-red-100 text-red-500 text-sm mt-3 px-2 py-1 rounded">
@@ -69,8 +69,8 @@ export const SignupPage = () => {
                     </button>
                 </form>
                 
-                <p className=" text-gray-400 mt-10 mb-20 text-center">
-                    Already have an account? <NavLink to="/login" className=" text-gray-600 underline">Log in</NavLink>
+                <p className=" text-text-muted mt-10 mb-20 text-center">
+                    Already have an account? <NavLink to="/login" className=" text-text-secondary underline">Log in</NavLink>
                 </p>
 
             </div>

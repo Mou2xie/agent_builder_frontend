@@ -116,11 +116,11 @@ export const PersonnelPage = () => {
     }
 
     return (
-        <div className="grow px-20 py-8 bg-white">
+        <div className="grow px-20 py-8 bg-background-card">
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
-                    <h1 className=" text-3xl font-semibold text-primary">Personnel</h1>
-                    <p className=" text-gray-400 mt-1">Create your agent's profile, make it a real worker — name it, describe its job, and set what it should aim for.</p>
+                    <h1 className=" text-3xl font-semibold text-text-main">Personnel</h1>
+                    <p className=" text-text-muted mt-1">Create your agent's profile, make it a real worker — name it, describe its job, and set what it should aim for.</p>
                 </div>
             </section>
 
@@ -128,27 +128,27 @@ export const PersonnelPage = () => {
                 <form className="flex flex-col gap-5 w-3/5" onSubmit={handleSubmit}>
                     <label className=" flex flex-col gap-2">
                     <span className=" text-primary text-sm">Agent Name</span>
-                    <input className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="text" id="agentName" name="agentName" onChange={handleChange} value={formData.agentName} />
+                    <input className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" type="text" id="agentName" name="agentName" onChange={handleChange} value={formData.agentName} />
                 </label>
                 <label className=" flex flex-col gap-2">
                     <InfoTip content={<span>Describe the type of role your agent plays, like "Customer Support Agent" or "Data Analyst". This helps define its personality and approach.</span>}>
                         <span className=" text-primary text-sm">Personnel</span>
                     </InfoTip>
-                    <textarea name="personnel" id="personnel" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.personnel}></textarea>
+                    <textarea name="personnel" id="personnel" className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.personnel}></textarea>
                 </label>
                 <label className=" flex flex-col gap-2">
                     <InfoTip content={<span>Explain what your agent does in detail. What tasks does it handle? What kind of questions can it answer? The more specific, the better.</span>}>
                         <span className=" text-primary text-sm">Job Description</span>
                     </InfoTip>
-                    <textarea name="jobDescription" id="jobDescription" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.jobDescription}></textarea>
+                    <textarea name="jobDescription" id="jobDescription" className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.jobDescription}></textarea>
                 </label>
                 <label className=" flex flex-col gap-2">
                     <InfoTip content={<span>What should your agent aim to achieve? For example: "Resolve customer issues" or "Help customers to make purchases decisions".</span>}>
                         <span className=" text-primary text-sm">Goals</span>
                     </InfoTip>
-                    <textarea name="goals" id="goals" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.goals}></textarea>
+                    <textarea name="goals" id="goals" className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.goals}></textarea>
                 </label>
-                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer">{
+                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer">{
                     mutation.isPending ? 'Saving...' : 'Save'
                 }</button>
             </form>
@@ -157,10 +157,10 @@ export const PersonnelPage = () => {
                     <img
                         src={avatarUrl}
                         alt="Agent Avatar"
-                        className="w-40 h-40 rounded-lg object-cover border border-gray-200"
+                        className="w-40 h-40 rounded-lg object-cover border border-border-light"
                     />
                 ) : (
-                    <div className="w-40 h-40 rounded-lg border border-gray-200 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">No Avatar</div>
+                    <div className="w-40 h-40 rounded-lg border border-border-light bg-primary-light flex items-center justify-center text-text-muted text-sm">No Avatar</div>
                 )}
                 <div>
                     <input
@@ -172,13 +172,13 @@ export const PersonnelPage = () => {
                     />
                     <button
                         type="button"
-                        className="px-3 py-2 text-sm text-primary border border-primary rounded-md hover:bg-gray-50 transition-colors duration-200 flex items-center gap-2 cursor-pointer"
+                        className="px-3 py-2 text-sm text-primary border border-primary rounded-md hover:bg-primary hover:text-white transition-colors duration-200 flex items-center gap-2 cursor-pointer"
                         onClick={() => fileInputRef.current?.click()}
                     >
                         <Upload size={16} />
                         {avatarUploadMutation.isPending ? 'Uploading...' : 'Upload Avatar'}
                     </button>
-                    <p className="text-xs text-gray-400 mt-1">PNG, JPG, or SVG allowed</p>
+                    <p className="text-xs text-center text-text-muted mt-2">PNG, JPG, or SVG</p>
                 </div>
             </div>
             </div>

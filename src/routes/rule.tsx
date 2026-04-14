@@ -117,29 +117,22 @@ export const RulePage = () => {
         })
     }
 
-    const handleTogglePause = (ruleId: string) => {
-        const newRules = rules.map((r) =>
-            r.id === ruleId ? { ...r, paused: !r.paused } : r,
-        )
-        updateRulesMutation.mutate(newRules)
-    }
-
     const handleDelete = (ruleId: string) => {
         const newRules = rules.filter((r) => r.id !== ruleId)
         updateRulesMutation.mutate(newRules)
     }
 
     return (
-        <div className="grow px-20 py-8 bg-white">
+        <div className="grow px-20 py-8 bg-background-card">
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
-                    <h1 className="text-3xl font-semibold text-primary">Rule</h1>
-                    <p className="text-gray-400 mt-1">Set keyword-triggered rules so your agent automatically responds with pre-defined content when specific keywords are matched in a conversation.</p>
+                    <h1 className="text-3xl font-semibold text-text-main">Rule</h1>
+                    <p className="text-text-muted mt-1">Set keyword-triggered rules so your agent automatically responds with pre-defined content when specific keywords are matched in a conversation.</p>
                 </div>
                 <section className=" shrink-0">
                     <button
                         onClick={openCreateModal}
-                        className="ml-auto px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-2 cursor-pointer"
+                        className="ml-auto px-5 py-2 bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 flex items-center gap-2 cursor-pointer"
                     >
                         <Plus size={18} />
                         Add Rule
@@ -159,12 +152,12 @@ export const RulePage = () => {
             )}
             <section className="grid grid-cols-2 gap-5">
                 {rules.length === 0 && !query.isLoading && (
-                    <p className="col-span-2 text-center text-gray-400 py-10">
+                    <p className="col-span-2 text-center text-text-muted py-10">
                         No rules yet. Click "Add Rule" to create one.
                     </p>
                 )}
                 {query.isLoading && (
-                    <p className="col-span-2 text-center text-gray-400 py-10">
+                    <p className="col-span-2 text-center text-text-muted py-10">
                         Loading...
                     </p>
                 )}
@@ -173,7 +166,6 @@ export const RulePage = () => {
                         key={rule.id}
                         rule={rule}
                         onEdit={openEditModal}
-                        onTogglePause={handleTogglePause}
                         onDelete={handleDelete}
                     />
                 ))}
@@ -197,13 +189,13 @@ export const RulePage = () => {
                             {formKeywords.map((kw) => (
                                 <span
                                     key={kw}
-                                    className="px-3 py-1 bg-slate-500 text-white rounded-full text-sm flex items-center gap-1"
+                                    className="px-3 py-1 bg-primary text-white rounded-full text-sm flex items-center gap-1"
                                 >
                                     {kw}
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveKeyword(kw)}
-                                        className="hover:text-red-300 transition-colors cursor-pointer"
+                                        className="hover:text-white transition-colors cursor-pointer"
                                     >
                                         <X size={14} />
                                     </button>
@@ -211,7 +203,7 @@ export const RulePage = () => {
                             ))}
                         </div>
                         <input
-                            className="border border-gray-300 rounded-lg px-3 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                            className="border border-border-light rounded-lg px-3 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-primary"
                             type="text"
                             placeholder="Type a keyword and press Enter"
                             value={keywordInput}
@@ -222,7 +214,7 @@ export const RulePage = () => {
                     <label className="flex flex-col gap-2">
                         <span className="text-primary text-sm">Response</span>
                         <textarea
-                            className="border border-gray-300 rounded-lg px-3 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-primary min-h-[100px]"
+                            className="border border-border-light rounded-lg px-3 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-primary min-h-[100px]"
                             placeholder="Enter the response when keywords are matched..."
                             value={formResponse}
                             onChange={(e) => setFormResponse(e.target.value)}
@@ -232,7 +224,7 @@ export const RulePage = () => {
                         <button
                             type="button"
                             onClick={() => setModalOpen(false)}
-                            className="px-5 py-2 border border-gray-300 rounded-sm hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                            className="px-5 py-2 border border-border-light rounded-lg hover:bg-primary-light transition-colors duration-200 cursor-pointer"
                         >
                             Cancel
                         </button>
@@ -243,7 +235,7 @@ export const RulePage = () => {
                                 !formResponse.trim() ||
                                 updateRulesMutation.isPending
                             }
-                            className="px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-5 py-2 bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {updateRulesMutation.isPending ? "Saving..." : "Save"}
                         </button>

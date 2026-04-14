@@ -1,4 +1,4 @@
-import { SquarePen, Pause, Trash2, Play } from "lucide-react"
+import { SquarePen, Trash2 } from "lucide-react"
 
 interface Rule {
     id: string
@@ -10,63 +10,34 @@ interface Rule {
 interface RuleCardProps {
     rule: Rule
     onEdit: (rule: Rule) => void
-    onTogglePause: (ruleId: string) => void
     onDelete: (ruleId: string) => void
 }
 
-export const RuleCard = ({ rule, onEdit, onTogglePause, onDelete }: RuleCardProps) => {
+export const RuleCard = ({ rule, onEdit, onDelete }: RuleCardProps) => {
     return (
-        <div
-            className={`border border-gray-300 rounded-xl p-5 space-y-5 ${rule.paused ? "opacity-50" : ""}`}
-        >
-            <div className="flex items-baseline gap-10">
-                <p className="text-gray-400">Keywords</p>
-                <div className="flex flex-wrap gap-2">
-                    {rule.keywords.map((kw) => (
-                        <span
-                            key={kw}
-                            className="px-3 py-1 bg-slate-500 text-white rounded-full text-sm"
-                        >
-                            {kw}
-                        </span>
-                    ))}
-                </div>
+        <div className="bg-background-card border border-border-light rounded-xl px-8 pt-8">
+            <div className="flex flex-wrap gap-2 mb-4">
+                {rule.keywords.map((kw) => (
+                    <span
+                        key={kw}
+                        className="px-3 py-1 bg-primary-light text-primary rounded-full text-sm font-medium"
+                    >
+                        {kw}
+                    </span>
+                ))}
             </div>
-            <div className="flex items-baseline gap-10">
-                <p className="text-gray-400">Response</p>
-                <p className="text-sm">{rule.response}</p>
-            </div>
-            <div className="flex justify-between items-center">
-                {rule.paused ? (
-                    <span className="text-xs text-amber-600 font-medium">Paused</span>
-                ) : (
-                    <span />
-                )}
-                <div className="flex gap-5">
-                    <SquarePen
-                        size={20}
-                        className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
-                        onClick={() => onEdit(rule)}
-                    />
-                    {rule.paused ? (
-                        <Play
-                            size={20}
-                            className="text-gray-400 cursor-pointer hover:text-green-500 transition-colors duration-200"
-                            onClick={() => onTogglePause(rule.id)}
-                        />
-                    ) : (
-                        <Pause
-                            size={20}
-                            className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
-                            onClick={() => onTogglePause(rule.id)}
-                        />
-                    )}
-                    <Trash2
-                        size={20}
-                        className="text-gray-400 cursor-pointer hover:text-red-400 transition-colors duration-200"
-                        onClick={() => onDelete(rule.id)}
-                    />
-                </div>
+            <p className="text-sm text-text-secondary leading-relaxed line-clamp-3 mb-6">{rule.response}</p>
+            <div className="flex justify-end items-center gap-5 py-5 border-t border-border-divider">
+                <SquarePen
+                    size={22}
+                    className=" text-text-muted cursor-pointer hover:text-primary transition-colors duration-200"
+                    onClick={() => onEdit(rule)}
+                />
+                <Trash2
+                    size={22}
+                    className=" text-text-muted cursor-pointer hover:text-red-400 transition-colors duration-200"
+                    onClick={() => onDelete(rule.id)}
+                />
             </div>
         </div>
     )

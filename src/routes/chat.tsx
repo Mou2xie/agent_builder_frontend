@@ -61,7 +61,7 @@ export const ChatPage = () => {
                 ))}
                 {isAiResponding && (
                     <div className=" m-5 flex justify-start">
-                        <div className=" px-4 py-2 rounded-lg bg-slate-100 text-primary flex items-center gap-2">
+                        <div className=" px-4 py-2 rounded-lg bg-primary-light text-primary flex items-center gap-2">
                             <span className=" inline-flex gap-1" aria-hidden="true">
                                 <span className=" w-1.5 h-1.5 rounded-full bg-primary animate-pulse [animation-delay:0ms]" />
                                 <span className=" w-1.5 h-1.5 rounded-full bg-primary animate-pulse [animation-delay:150ms]" />
@@ -71,7 +71,7 @@ export const ChatPage = () => {
                     </div>
                 )}
             </div>
-            <form className=' max-w-3xl mx-auto flex items-end w-full min-h-14 bg-white border-gray-100 shadow-sm p-5 rounded-lg '
+            <form className=' max-w-3xl mx-auto flex items-end w-full min-h-14 bg-background-card border-border-light shadow-sm p-5 rounded-lg '
                 onSubmit={e => {
                     e.preventDefault();
                     handleSubmit();
@@ -92,7 +92,7 @@ export const ChatPage = () => {
                     rows={1}
                     placeholder="Ask away..."
                 />
-                <button type="submit" disabled={status !== 'ready'} className=" text-gray-400 cursor-pointer hover:text-gray-600 transition-colors duration-200">
+                <button type="submit" disabled={status !== 'ready'} className=" text-text-muted cursor-pointer hover:text-text-secondary transition-colors duration-200">
                     <Send size={26} />
                 </button>
             </form>

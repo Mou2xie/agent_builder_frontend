@@ -8,6 +8,12 @@ export const BehaviorPage = () => {
     const { id } = useParams();
     const queryClient = useQueryClient();
 
+    const [formData, setFormData] = useState({
+        themeColour: "",
+        welcomeMessage: "",
+        tone: "",
+    });
+
     const query = useQuery({
         queryKey: ['agent-behavior', id],
         queryFn: async () => {
@@ -29,6 +35,7 @@ export const BehaviorPage = () => {
             return data;
         }
     });
+    void query;
 
     const mutation = useMutation({
         mutationFn: async () => {
@@ -51,12 +58,6 @@ export const BehaviorPage = () => {
         }
     });
 
-    const [formData, setFormData] = useState({
-        themeColour: "",
-        welcomeMessage: "",
-        tone: "",
-    });
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -71,11 +72,11 @@ export const BehaviorPage = () => {
     }
 
     return (
-        <div className="grow px-20 py-8 bg-white">
+        <div className="grow px-20 py-8 bg-background-card">
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
-                    <h1 className=" text-3xl font-semibold text-primary">Behavior</h1>
-                    <p className=" text-gray-400 mt-1">Control how your agent behaves in conversations — from the first greeting to the overall communication style."</p>
+                    <h1 className=" text-3xl font-semibold text-text-main">Behavior</h1>
+                    <p className=" text-text-muted mt-1">Control how your agent behaves in conversations — from the first greeting to the overall communication style.</p>
                 </div>
             </section>
 
@@ -90,7 +91,7 @@ export const BehaviorPage = () => {
 
                 <label className=" flex flex-col gap-2 ">
                     <span className=" text-primary text-sm">Welcome Message</span>
-                    <textarea name="welcomeMessage" id="welcomeMessage" className=" border border-gray-300 rounded-lg pl-2 py-2 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.welcomeMessage}></textarea>
+                    <textarea name="welcomeMessage" id="welcomeMessage" className=" border border-border-light rounded-lg pl-2 py-2 placeholder:text-text-muted placeholder:text-sm focus:outline-none focus:ring-1 focus: ring-primary" onChange={handleChange} value={formData.welcomeMessage}></textarea>
                 </label>
                 <div className="flex flex-col gap-2">
                     <span className=" text-primary text-sm">Tone</span>
@@ -98,7 +99,7 @@ export const BehaviorPage = () => {
                         {(["professional", "casual", "neutral"] as const).map((tone) => (
                             <label
                                 key={tone}
-                                className={`flex-1 rounded-lg px-4 py-3 text-center cursor-pointer transition-all duration-200 ${formData.tone === tone ? "bg-white border-2 border-primary text-primary" : "border border-gray-400 text-gray-400"}`}
+                                className={`flex-1 rounded-lg px-4 py-3 text-center cursor-pointer transition-colors duration-200 border-2 ${formData.tone === tone ? "bg-background-card border-primary text-primary" : "border-border-light text-text-muted"}`}
                             >
                                 <input
                                     type="radio"
@@ -113,7 +114,7 @@ export const BehaviorPage = () => {
                         ))}
                     </div>
                 </div>
-                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer" onClick={handleSubmit}>
+                <button type="submit" className=" self-end px-5 py-2 bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer" onClick={handleSubmit}>
                     {
                         mutation.isPending ? "Saving..." : "Save"
                     }

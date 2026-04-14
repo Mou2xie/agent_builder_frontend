@@ -80,21 +80,21 @@ export const AgentListPage = () => {
 
     return (
         <>
-            <nav className=" h-16 bg-background border-b border-gray-200 flex items-center px-20 sticky top-0 z-10">
-                <h2 className=" font-heading text-xl font-extrabold text-primary">Agent Builder</h2>
+            <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-20 sticky top-0 z-10">
+                <h2 className=" font-heading text-xl font-extrabold text-text-main">Agent Builder</h2>
                 <div className="ml-auto flex items-center">
                     {
-                        user && (<p className=" text-gray-400 text-sm select-none">{user.email}</p>)
+                        user && (<p className=" text-text-muted text-sm select-none">{user.email}</p>)
                     }
                     <div className="relative ml-5" ref={menuRef}>
                         <Settings
-                            className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors duration-200"
+                            className="text-text-muted cursor-pointer hover:text-text-secondary transition-colors duration-200"
                             onClick={() => setMenuOpen((prev) => !prev)}
                         />
                         {menuOpen && (
-                            <div className="absolute right-0 top-full mt-2 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+                            <div className="absolute right-0 top-full mt-2 w-36 bg-background-card border border-border-light rounded-md shadow-float z-20">
                                 <button
-                                    className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                                    className="flex items-center gap-2 w-full px-3 py-2 text-sm text-text-secondary hover:bg-primary-light cursor-pointer"
                                     onClick={handleLogout}
                                 >
                                     <LogOut size={16} />
@@ -107,7 +107,7 @@ export const AgentListPage = () => {
             </nav>
             <main className=" max-w-6xl mx-auto">
                 <section className=" flex items-center my-10">
-                    <h2 className=" text-3xl text-primary font-semibold">Agents</h2>
+                    <h2 className=" text-3xl text-text-main font-semibold">Agents</h2>
                     <button className=" ml-auto px-3 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-1 cursor-pointer"
                         onClick={() => mutation.mutate()}>
                         {
@@ -117,7 +117,7 @@ export const AgentListPage = () => {
                         }
                     </button>
                 </section>
-                {isLoading && <p className=" text-gray-400 text-center mt-30">Loading...</p>}
+                {isLoading && <p className=" text-text-muted text-center mt-30">Loading...</p>}
                 {isError && <p className=" text-red-500 text-center mt-30">Error: {error.message}</p>}
                 <section className=" grid grid-cols-3 gap-5 mb-20">
                     {

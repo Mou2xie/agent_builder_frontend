@@ -18,11 +18,11 @@ export const Chatbar = () => {
         },
     });
     return (
-        <nav className=" h-16 bg-background border-b border-gray-200 flex items-center px-20">
+        <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-20">
             {query.data?.avatar_url && (
                 <img src={supabaseClient.storage.from('avatar').getPublicUrl(query.data.avatar_url).data.publicUrl} alt="Agent Avatar" className=" w-11 h-11 rounded-lg object-cover" />
             )}
-            <h2 className=" font-heading text-xl font-extrabold text-primary ml-4 ">
+            <h2 className=" font-heading text-xl font-extrabold text-text-main ml-4 ">
                 {
                     query.data && query.data.name
                 }

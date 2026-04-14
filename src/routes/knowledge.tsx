@@ -125,11 +125,11 @@ export const KnowledgePage = () => {
   };
 
   return (
-    <div className="grow px-20 py-8 bg-white">
+    <div className="grow px-20 py-8 bg-background-card">
       <section className=" flex justify-between items-end gap-20 mb-10">
         <div>
-          <h1 className="text-3xl font-semibold text-primary">Knowledge Base</h1>
-          <p className="text-gray-400 mt-1">
+          <h1 className="text-3xl font-semibold text-text-main">Knowledge Base</h1>
+          <p className="text-text-muted mt-1">
             Teach your agent by uploading documents. Your agent will use what it learns to respond more accurately to questions.
           </p>
         </div>
@@ -145,7 +145,7 @@ export const KnowledgePage = () => {
           <div className="ml-auto w-fit">
             <label
               htmlFor="file-upload"
-              className={`px-5 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity duration-200 flex items-center gap-3 cursor-pointer w-fit ${uploadMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`px-5 py-2 bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 flex items-center gap-3 cursor-pointer w-fit ${uploadMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {uploadMutation.isPending ? <Loader2 size={22} className="animate-spin" /> : <Upload size={22} />}
               <span>
@@ -163,14 +163,14 @@ export const KnowledgePage = () => {
         </div>
       )}
 
-      <section className="border border-gray-300 rounded-xl">
+      <section className="border border-border-light rounded-xl">
         <ul>
           {query.isLoading && (
-            <li className="p-5 text-gray-400 text-center">Loading...</li>
+            <li className="p-5 text-text-muted text-center">Loading...</li>
           )}
 
           {!query.isLoading && query.data?.length === 0 && (
-            <li className="p-5 text-gray-400 text-center">No files yet</li>
+            <li className="p-5 text-text-muted text-center">No files yet</li>
           )}
 
           {query.data?.map((file) => {
@@ -179,15 +179,15 @@ export const KnowledgePage = () => {
             return (
               <li
                 key={file.name}
-                className="px-5 py-3 border-b border-gray-200 last:border-0 flex items-center gap-3"
+                className="px-5 py-3 border-b border-border-divider last:border-0 flex items-center gap-3"
               >
                 <File className="text-primary" size={20} />
-                <span className="text-primary truncate max-w-75" title={file.name}>
+                <span className="text-text-secondary truncate max-w-75" title={file.name}>
                   {file.name.split("-").slice(1).join("-")}
                 </span>
 
                 <div className="ml-5 flex items-center text-sm">
-                  {(currentStatus === 'pending' || currentStatus === 'processing') && <span className="text-gray-500 flex items-center gap-1"><Loader2 size={14} className="animate-spin" /> Vectorizing...</span>}
+                  {(currentStatus === 'pending' || currentStatus === 'processing') && <span className="text-text-muted flex items-center gap-1"><Loader2 size={14} className="animate-spin" /> Vectorizing...</span>}
                   {currentStatus === 'completed' && <span className="text-green-500 flex items-center gap-1"><CheckCircle size={14} /> Ready</span>}
                   {currentStatus === 'failed' && <span className="text-red-500 flex items-center gap-1"><AlertCircle size={14} /> Failed</span>}
                   {currentStatus === 'failed' && (
@@ -202,7 +202,7 @@ export const KnowledgePage = () => {
                   )}
                 </div>
 
-                <span className="ml-auto text-gray-400 shrink-0">
+                <span className="ml-auto text-text-muted shrink-0">
                   {(() => {
                     const timestamp = Number(file.name.split("-")[0]);
                     if (!Number.isFinite(timestamp)) return "";
@@ -222,7 +222,7 @@ export const KnowledgePage = () => {
 
                 <Trash2
                   size={20}
-                  className=" ml-5 text-gray-400 cursor-pointer hover:text-red-400 transition-colors duration-200 shrink-0"
+                  className=" ml-5 text-text-muted cursor-pointer hover:text-red-400 transition-colors duration-200 shrink-0"
                   onClick={() => deleteMutation.mutate(file.name)}
                 />
               </li>
