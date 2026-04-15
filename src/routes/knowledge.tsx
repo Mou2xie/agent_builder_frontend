@@ -84,7 +84,7 @@ export const KnowledgePage = () => {
 
   const retryMutation = useMutation({
     mutationFn: async (fileName: string) => {
-      const res = await fetch(`${import.meta.env.VITE_GAG_SERVICE_URL}/${id}/${fileName}/${user?.id}`, {
+      const res = await fetch(`${import.meta.env.VITE_RAG_SERVICE_URL}/${id}/${fileName}/${user?.id}`, {
         method: "POST",
         headers: {
           "X-API-Key": import.meta.env.VITE_SERVICE_API_KEY
@@ -158,6 +158,18 @@ export const KnowledgePage = () => {
           </div>
         </section>
       </section>
+      {uploadMutation.isError && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-sm text-red-600">
+          <AlertCircle size={16} className="shrink-0" />
+          <span>Upload failed: {uploadMutation.error instanceof Error ? uploadMutation.error.message : "Unknown error"}</span>
+          <button
+            className="ml-auto underline hover:no-underline"
+            onClick={() => uploadMutation.reset()}
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
       {(uploadMutation.isPending || Object.values(taskStatuses).some(s => s === 'pending' || s === 'processing')) && (
         <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-2 text-sm text-amber-600">
           <Loader2 size={16} className="animate-spin shrink-0" />
