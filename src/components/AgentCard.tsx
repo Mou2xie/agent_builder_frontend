@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 import { Settings, Share2, Trash2 } from 'lucide-react';
-import { supabaseClient } from "../libs/supabaseClient";
-import defaultAvatar from "../assets/yong.png"
+import { resolveAvatarUrl } from "../libs/avatar";
 
 interface AgentCardProps {
     id: string;
@@ -17,9 +16,7 @@ interface AgentCardProps {
 export const AgentCard = ({ id, name, personnel, job_description, status, avatar_url, onDelete }: AgentCardProps) => {
     const [confirmOpen, setConfirmOpen] = useState(false);
 
-    const avatarSrc = avatar_url
-        ? supabaseClient.storage.from('avatar').getPublicUrl(avatar_url).data.publicUrl
-        : defaultAvatar;
+    const avatarSrc = resolveAvatarUrl(avatar_url) ?? "";
 
     return (
         <div key={id} className=" bg-background-card shadow-card-soft rounded-xl px-8 pt-8">

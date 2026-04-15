@@ -2,6 +2,7 @@ import { useState, useRef } from "react"
 import { useParams } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabaseClient } from "../libs/supabaseClient";
+import { resolveAvatarUrl } from "../libs/avatar";
 import { Upload } from 'lucide-react';
 import { InfoTip } from "../components/InfoTip";
 
@@ -39,8 +40,7 @@ export const PersonnelPage = () => {
             });
 
             if (data?.avatar_url) {
-                const { data: urlData } = supabaseClient.storage.from('avatar').getPublicUrl(data.avatar_url);
-                setAvatarUrl(urlData.publicUrl);
+                setAvatarUrl(resolveAvatarUrl(data.avatar_url));
             } else {
                 setAvatarUrl(null);
             }

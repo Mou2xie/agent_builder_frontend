@@ -138,7 +138,7 @@ export const KnowledgePage = () => {
             type="file"
             id="file-upload"
             className="hidden"
-            accept=".pdf,.txt,.docx"
+            accept=".pdf,.txt,.docx,.md,.markdown"
             onChange={fileUploadHandler}
             disabled={uploadMutation.isPending}
           />
@@ -150,7 +150,7 @@ export const KnowledgePage = () => {
               {uploadMutation.isPending ? <Loader2 size={22} className="animate-spin" /> : <Upload size={22} />}
               <span>
                 <p>{uploadMutation.isPending ? "Uploading..." : "Upload Document"}</p>
-                <p className="text-[10px]">PDF, DOCX, TXT</p>
+                <p className="text-[10px]">PDF, DOCX, TXT, MD</p>
               </span>
             </label>
           </div>

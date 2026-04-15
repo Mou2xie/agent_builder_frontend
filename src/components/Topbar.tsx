@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from "react-router"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabaseClient } from "../libs/supabaseClient";
-import { Settings, Trash2 } from "lucide-react";
+import { resolveAvatarUrl } from "../libs/avatar";
+import { ArrowLeft, Settings, Trash2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Modal } from "./Modal";
 
@@ -15,7 +16,6 @@ export const Topbar = () => {
     const queryClient = useQueryClient();
     const [menuOpen, setMenuOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const [statusConfirmOpen, setStatusConfirmOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -60,11 +60,22 @@ export const Topbar = () => {
 
     const currentStatus = query.data?.status ?? "STANDBY";
     const isOnline = currentStatus === "ONLINE";
+    const avatarSrc = resolveAvatarUrl(query.data?.avatar_url);
+    const toggleStatus = () => {
+        statusMutation.mutate(isOnline ? "STANDBY" : "ONLINE");
+    };
 
     return (
-        <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-20">
-            {query.data?.avatar_url ? (
-                <img src={supabaseClient.storage.from('avatar').getPublicUrl(query.data.avatar_url).data.publicUrl} alt="Agent Avatar" className=" w-11 h-11 rounded-lg object-cover" />
+        <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-10">
+            <button
+                onClick={() => navigate('/dashboard/agent-list')}
+                className="mr-4 w-9 h-9 flex items-center justify-center rounded-lg text-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer"
+                aria-label="Back to agent list"
+            >
+                <ArrowLeft size={24} />
+            </button>
+            {avatarSrc ? (
+                <img src={avatarSrc} alt="Agent Avatar" className=" w-11 h-11 rounded-lg object-cover" />
             ) : (
                 <div className="w-11 h-11 rounded-lg bg-primary-light border border-border-light" />
             )}
@@ -79,11 +90,17 @@ export const Topbar = () => {
             </div>
             <div className="ml-auto flex items-center gap-3">
                 <button
-                    onClick={() => setStatusConfirmOpen(true)}
+                    onClick={toggleStatus}
                     disabled={statusMutation.isPending}
-                    className={`h-9 px-4 text-sm rounded-lg font-medium transition-colors duration-200 cursor-pointer ${isOnline ? "bg-primary text-white" : "bg-primary-light text-primary"} ${statusMutation.isPending ? "opacity-50 cursor-not-allowed" : "hover:opacity-85"}`}
+                    role="switch"
+                    aria-checked={isOnline}
+                    aria-label="Toggle agent status"
+                    className={`flex items-center gap-2 px-2 py-1 rounded-full transition-opacity duration-200 ${statusMutation.isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 >
-                    {statusMutation.isPending ? "..." : currentStatus}
+                    <span className={`text-[14px] font-medium  ${currentStatus === "ONLINE" ? "text-primary" : "text-text-muted"} min-w-14.5 text-right`}>{currentStatus}</span>
+                    <span className={`w-11 h-6 rounded-full relative transition-colors duration-200 ${isOnline ? "bg-primary" : "bg-border-light"}`}>
+                        <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-card-soft transition-all duration-200 ${isOnline ? "left-5.5" : "left-0.5"}`} />
+                    </span>
                 </button>
                 <div ref={menuRef} className="relative">
                     <div onClick={() => setMenuOpen(v => !v)} className="w-9 h-9 flex items-center justify-center border-2 border-primary rounded-lg group hover:bg-primary transition-colors duration-200 cursor-pointer">
@@ -104,13 +121,6 @@ export const Topbar = () => {
                 <div className="flex justify-end gap-3">
                     <button onClick={() => setConfirmOpen(false)} className="px-4 py-2 text-sm text-text-secondary rounded-lg hover:bg-primary-light transition-colors duration-200 cursor-pointer">Cancel</button>
                     <button onClick={() => void handleDelete()} className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors duration-200 cursor-pointer">Delete</button>
-                </div>
-            </Modal>
-            <Modal open={statusConfirmOpen} onClose={() => setStatusConfirmOpen(false)} title={isOnline ? "Switch to Standby" : "Switch to Online"}>
-                <p className="text-text-secondary mb-6">{isOnline ? "Are you sure you want to set this agent to Standby? It will stop responding to users." : "Are you sure you want to set this agent to Online? It will start responding to users."}</p>
-                <div className="flex justify-end gap-3">
-                    <button onClick={() => setStatusConfirmOpen(false)} className="px-4 py-2 text-sm text-text-secondary rounded-lg hover:bg-primary-light transition-colors duration-200 cursor-pointer">Cancel</button>
-                    <button onClick={() => { setStatusConfirmOpen(false); statusMutation.mutate(isOnline ? "STANDBY" : "ONLINE"); }} className="px-4 py-2 text-sm text-white bg-primary rounded-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer">Confirm</button>
                 </div>
             </Modal>
         </nav>

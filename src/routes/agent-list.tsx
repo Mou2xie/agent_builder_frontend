@@ -1,11 +1,21 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuthStore } from "../stores/useAuthStore"
-import { useNavigate } from "react-router";
+import { useNavigate, NavLink } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabaseClient } from "../libs/supabaseClient";
 import { AgentCard } from "../components/AgentCard";
+import logo from "../assets/logo.svg";
 
-import { Plus, Settings, LogOut } from 'lucide-react';
+import { Plus, Settings, LogOut, Bot } from 'lucide-react';
+
+const defaultAvatars = [
+    "/default-avatars/shamshad.png",
+    "/default-avatars/xie.png",
+    "/default-avatars/lu.png",
+    "/default-avatars/sam.png",
+    "/default-avatars/anton.png",
+];
+const randomAvatar = () => defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
 
 
 export const AgentListPage = () => {
@@ -48,6 +58,18 @@ export const AgentListPage = () => {
         }
     })
 
+    const deleteMutation = useMutation({
+        mutationFn: async (agentId: string) => {
+            const { error } = await supabaseClient.from("agents").delete().eq("id", agentId);
+            if (error) {
+                throw new Error(error.message);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["agent-list"] });
+        }
+    });
+
     const mutation = useMutation({
         mutationFn: async () => {
             const { data, error } = await supabaseClient.from("agents")
@@ -55,12 +77,13 @@ export const AgentListPage = () => {
                     user_id: user?.id,
                     name: "New Agent",
                     status: "STANDBY",
-                    theme_color:"#3B82F6",
-                    welcome_message:"Hello, nice to meet you! How can I assist you today?",
-                    tone:"casual",
-                    personnel:"I am a helpful assistant.",
-                    job_description:"Assist users with their tasks and answer their questions.",
-                    goals:" Provide accurate and helpful information to users."
+                    avatar_url: randomAvatar(),
+                    theme_color: "#3B82F6",
+                    welcome_message: "Hello, nice to meet you! How can I assist you today?",
+                    tone: "casual",
+                    personnel: "I am a helpful assistant.",
+                    job_description: "Assist users with their tasks and answer their questions.",
+                    goals: " Provide accurate and helpful information to users."
                 })
                 .select("id")
                 .single();
@@ -81,7 +104,12 @@ export const AgentListPage = () => {
     return (
         <>
             <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-20 sticky top-0 z-10">
-                <h2 className=" font-heading text-xl font-extrabold text-text-main">Agent Builder</h2>
+
+                <NavLink to="/" className="flex items-center gap-2">
+                    <img src={logo} alt="NovaAgent logo" className=" w-10 h-10" />
+                    <h2 className="font-heading text-2xl font-extrabold text-text-main">NovaAgent</h2>
+                </NavLink>
+
                 <div className="ml-auto flex items-center">
                     {
                         user && (<p className=" text-text-muted text-sm select-none">{user.email}</p>)
@@ -119,13 +147,26 @@ export const AgentListPage = () => {
                 </section>
                 {isLoading && <p className=" text-text-muted text-center mt-30">Loading...</p>}
                 {isError && <p className=" text-red-500 text-center mt-30">Error: {error.message}</p>}
-                <section className=" grid grid-cols-3 gap-5 mb-20">
-                    {
-                        data && data.map((agent) => (
-                            <AgentCard key={agent.id} {...agent} ></AgentCard>
-                        ))
-                    }
-                </section>
+                {!isLoading && !isError && data?.length === 0 && (
+                    <div className="flex flex-col items-center justify-center mt-30">
+                        <Bot size={48} className="text-text-muted mb-4" />
+                        <p className="text-text-muted text-lg mb-2">No agents yet</p>
+                        <p className="text-text-muted text-sm mb-6">Create your first agent to get started.</p>
+                        <button
+                            className="px-4 py-2 border border-primary rounded-md text-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer"
+                            onClick={() => mutation.mutate()}
+                        >
+                            {mutation.isPending ? "Creating..." : <><span>Create Agent</span></>}
+                        </button>
+                    </div>
+                )}
+                {data && data.length > 0 && (
+                    <section className=" grid grid-cols-3 gap-5 mb-20">
+                        {data.map((agent) => (
+                            <AgentCard key={agent.id} {...agent} onDelete={(id) => deleteMutation.mutate(id)}></AgentCard>
+                        ))}
+                    </section>
+                )}
             </main >
         </>
     )

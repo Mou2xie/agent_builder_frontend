@@ -1,32 +1,23 @@
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import { supabaseClient } from '../libs/supabaseClient';
+import { NavLink } from 'react-router';
 
-export const Chatbar = () => {
+interface ChatbarProps {
+    avatarSrc?: string | null;
+    name?: string;
+}
 
-    const { id } = useParams();
-
-    const query = useQuery({
-        queryKey: ["chatbar", id],
-        queryFn: async () => {
-            const { data, error } = await supabaseClient.from("agents").select("name,avatar_url").eq("id", id).single();
-            if (error) {
-                throw new Error(error.message);
-            }
-            console.log(data);
-            return data;
-        },
-    });
+export const Chatbar = ({ avatarSrc, name }: ChatbarProps) => {
     return (
         <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-20">
-            {query.data?.avatar_url && (
-                <img src={supabaseClient.storage.from('avatar').getPublicUrl(query.data.avatar_url).data.publicUrl} alt="Agent Avatar" className=" w-11 h-11 rounded-lg object-cover" />
+            {avatarSrc && (
+                <img src={avatarSrc} alt="Agent Avatar" className=" w-11 h-11 rounded-lg object-cover" />
             )}
-            <h2 className=" font-heading text-xl font-extrabold text-text-main ml-4 ">
-                {
-                    query.data && query.data.name
-                }
-            </h2>
+            <div className='ml-4'>
+                <h2 className=" font-heading text-xl font-extrabold text-text-main ">{name}</h2>
+                <p className=' text-[12px] text-text-muted -mt-1'>Powered by NovaAgent</p>
+            </div>
+            <NavLink to="/" target='blank' className="ml-auto px-5 py-2 text-sm text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200">
+                Create my agent
+            </NavLink>
         </nav>
     )
 }

@@ -1,33 +1,35 @@
 import { NavLink } from "react-router"
 import { useAuthStore } from "../stores/useAuthStore"
+import heroImage from "../assets/hero.png"
+import clock from "../assets/clock.png"
+import robot from "../assets/robot.png"
+import arrowup from "../assets/arrowup.png"
+import sam from "../assets/sam.png"
+import xie from "../assets/xie.png"
+import lu from "../assets/lu.png"
+import logo from "../assets/logo.svg"
 import {
-  MessageSquare,
-  Brain,
-  Target,
   Database,
   MousePointerClick,
   Share2,
-  PenTool,
-  Store,
-  GraduationCap,
   ArrowRight,
 } from "lucide-react"
 
 const CORE_CAPABILITIES = [
   {
-    icon: MessageSquare,
+    icon: clock,
     title: "24/7 Digital Concierge",
     description:
       "Act as a tireless business assistant. Automatically handle repetitive inquiries, provide personalized recommendations, reduce user friction, and directly increase conversion rates.",
   },
   {
-    icon: Brain,
+    icon: robot,
     title: "Your Expert Digital Twin",
     description:
       "Break the limits of static documents. Transform your private data into a highly accurate, interactive help desk that perfectly replicates your professional expertise and tone of voice.",
   },
   {
-    icon: Target,
+    icon: arrowup,
     title: "Intent-Driven Engine",
     description:
       "Move beyond passive chatting. Accurately recognize user intent to seamlessly push payment links, booking forms, and other business hooks within the conversation, completing the transaction loop.",
@@ -60,21 +62,21 @@ const STEPS = [
 
 const USE_CASES = [
   {
-    icon: PenTool,
+    icon: sam,
     title: "Knowledge Creators",
     subtitle: "For Creators",
     description:
       "Build a 24/7 online digital twin to handle fan Q&A and scale your personal brand around the clock.",
   },
   {
-    icon: Store,
+    icon: xie,
     title: "SMB Owners",
     subtitle: "For SMB Owners",
     description:
       "Create a tireless product guide that answers repetitive inquiries, reduces transaction friction, and boosts conversion rates.",
   },
   {
-    icon: GraduationCap,
+    icon: lu,
     title: "Subject Matter Experts",
     subtitle: "For Experts",
     description:
@@ -89,14 +91,16 @@ export const IndexPage = () => {
   return (
     <>
       <section className="pt-30 pb-20 bg-background-card">
-        <div className="mx-30 bg-background-hero rounded-4xl grid grid-cols-9 px-15 py-32">
-          <div className="col-span-4">
+
+        <div className="mx-30 bg-background-hero rounded-4xl grid grid-cols-9 gap-10 pl-15 py-28 boprder">
+
+          <div className=" flex flex-col justify-center col-span-4">
             <h1 className="font-heading text-4xl font-bold text-text-main leading-tight">
               <span className="block">Build your AI agent,</span>
               <span>your way.</span>
             </h1>
             <p className="mt-2 text-lg text-text-secondary">
-              Create a your own AI agent in minutes with a custom knowledge base. Zero coding required.
+              Create your own AI agent in minutes with a custom knowledge base. Zero coding required.
             </p>
             <div className="mt-10 flex items-center gap-4">
               <NavLink
@@ -107,16 +111,18 @@ export const IndexPage = () => {
               </NavLink>
             </div>
           </div>
+
           <div className="col-span-5">
-            {/* here to put hero image */}
+            <img src={heroImage} alt="NovaAgent hero" className=" object-cover" />
           </div>
+
         </div>
       </section>
 
       <section className="py-28">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="font-heading text-3xl font-bold text-center text-text-main">
-            What Build My Agent Can Do
+            What NovaAgent Can Do
           </h2>
           <p className="mt-2 text-center text-text-muted text-base">
             Transform your expertise into an active, 24/7 interactive experience.
@@ -125,14 +131,14 @@ export const IndexPage = () => {
             {CORE_CAPABILITIES.map((item) => (
               <div
                 key={item.title}
-                className="group flex items-start gap-6 py-10 first:pt-0 last:pb-0"
+                className=" flex items-center gap-12 py-10 first:pt-0 last:pb-0 "
               >
-                <div className="w-10 h-10 bg-background-hero rounded-full flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary-light transition-colors duration-200">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="w-20 h-20 flex items-center justify-center shrink-0">
+                  <img src={item.icon} alt={item.title} className=" object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-text-main">{item.title}</h3>
-                  <p className="mt-2 text-text-secondary leading-relaxed max-w-xl">{item.description}</p>
+                  <p className="mt-2 text-text-secondary leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -179,8 +185,8 @@ export const IndexPage = () => {
                 key={item.title}
                 className="group bg-background-card rounded-2xl border border-border-light p-8 transition-all duration-200 hover:shadow-card-soft hover:border-primary/20"
               >
-                <div className="w-11 h-11 bg-background-hero rounded-xl flex items-center justify-center group-hover:bg-primary-light transition-colors duration-200">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="w-16 h-16 bg-background-hero rounded-xl flex items-center justify-center group-hover:bg-primary-light transition-colors duration-200">
+                  <img src={item.icon} alt={item.title} className=" object-cover" />
                 </div>
                 <span className="mt-5 block text-xs font-semibold tracking-widest text-primary uppercase">
                   {item.subtitle}
@@ -209,19 +215,22 @@ export const IndexPage = () => {
       </section>
 
       <footer className="border-t border-border-divider py-10">
-        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-heading text-lg font-bold text-text-main">BuildMyAgent.</span>
+        <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
+          <div className=" flex items-center gap-3">
+            <img src={logo} alt="NovaAgent logo" className=" w-10 h-10" />
+            <span className="font-heading font-bold text-2xl text-text-main">NovaAgent.</span>
+          </div>
           <p className="text-sm text-text-muted">
-            &copy; {new Date().getFullYear()} BuildMyAgent. All rights reserved.
+            &copy; {new Date().getFullYear()} NovaAgent. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm text-text-secondary">
+          {/* <div className="flex items-center gap-6 text-sm text-text-secondary">
             <a href="#" className="hover:text-text-main transition-colors duration-200">
               Privacy Policy
             </a>
             <a href="#" className="hover:text-text-main transition-colors duration-200">
               Terms of Service
             </a>
-          </div>
+          </div> */}
         </div>
       </footer>
     </>
