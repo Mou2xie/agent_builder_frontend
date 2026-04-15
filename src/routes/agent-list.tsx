@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useAuthStore } from "../stores/useAuthStore"
 import { useNavigate, NavLink } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -103,6 +104,7 @@ export const AgentListPage = () => {
 
     return (
         <>
+            <Helmet><title>Agents - NovaAgent</title></Helmet>
             <nav className=" h-16 bg-background-card border-b border-border-light flex items-center px-20 sticky top-0 z-10">
 
                 <NavLink to="/" className="flex items-center gap-2">

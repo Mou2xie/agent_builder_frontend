@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useParams } from "react-router"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { Helmet } from "react-helmet-async"
 import { Plus, X } from "lucide-react"
 import { supabaseClient } from "../libs/supabaseClient"
 import { Modal } from "../components/Modal"
@@ -124,6 +125,7 @@ export const RulePage = () => {
 
     return (
         <div className="grow px-20 py-8 bg-background-card">
+            <Helmet><title>Rules - NovaAgent</title></Helmet>
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
                     <h1 className="text-3xl font-semibold text-text-main">Rule</h1>

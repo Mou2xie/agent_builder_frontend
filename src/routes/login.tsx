@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import { supabaseClient } from "../libs/supabaseClient";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useNavigate, NavLink } from "react-router";
@@ -49,6 +50,7 @@ export const LoginPage = () => {
 
     return (
         <div className=" min-h-screen flex justify-center items-center bg-background-hero relative">
+            <Helmet><title>Login - NovaAgent</title></Helmet>
             <div className=" absolute top-5 left-5 flex items-center gap-2">
                 <img src={logo} alt="NovaAgent logo" className=" w-8 h-8" />
                 <p className=" font-heading font-bold text-xl text-text-main">NovaAgent</p>

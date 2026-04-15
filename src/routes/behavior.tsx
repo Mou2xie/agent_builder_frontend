@@ -1,6 +1,7 @@
 import { useParams } from "react-router"
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { Helmet } from "react-helmet-async"
 import { supabaseClient } from "../libs/supabaseClient";
 
 export const BehaviorPage = () => {
@@ -73,6 +74,7 @@ export const BehaviorPage = () => {
 
     return (
         <div className="grow px-20 py-8 bg-background-card">
+            <Helmet><title>Behavior - NovaAgent</title></Helmet>
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
                     <h1 className=" text-3xl font-semibold text-text-main">Behavior</h1>

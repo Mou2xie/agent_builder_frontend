@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { Helmet } from "react-helmet-async";
 import { supabaseClient } from "../libs/supabaseClient";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "../stores/useAuthStore";
@@ -126,6 +127,7 @@ export const KnowledgePage = () => {
 
   return (
     <div className="grow px-20 py-8 bg-background-card">
+      <Helmet><title>Knowledge Base - NovaAgent</title></Helmet>
       <section className=" flex justify-between items-end gap-20 mb-10">
         <div>
           <h1 className="text-3xl font-semibold text-text-main">Knowledge Base</h1>

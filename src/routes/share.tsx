@@ -1,5 +1,6 @@
 import { Link, QrCode, Copy, Download } from 'lucide-react';
 import { useParams } from 'react-router';
+import { Helmet } from 'react-helmet-async';
 import { QRCodeSVG } from 'qrcode.react';
 
 
@@ -45,6 +46,7 @@ export const SharePage = () => {
 
     return (
         <div className="grow px-20 py-8 bg-background-card">
+            <Helmet><title>Share - NovaAgent</title></Helmet>
             <section className=" flex justify-between items-end gap-20 mb-10">
                 <div>
                     <h1 className=" text-3xl font-semibold text-text-main">Share</h1>

@@ -1,6 +1,7 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Chatbar } from '../components/Chatbar';
 import { Send, CircleOff } from 'lucide-react';
 import { useParams } from 'react-router';
@@ -61,13 +62,14 @@ export const ChatPage = () => {
 
     return (
         <>
+            <Helmet><title>Chat - NovaAgent</title></Helmet>
             <Chatbar avatarSrc={avatarSrc} name={agentQuery.data?.name} />
 
             {!isOnline && agentQuery.data && (
                 <div className="flex flex-col items-center justify-center h-[75vh] text-text-muted">
                     <CircleOff size={48} className="mb-4 text-text-muted/50" />
-                    <p className="text-lg font-medium">当前 Agent 不可用</p>
-                    <p className="text-sm mt-1">该 Agent 处于待机状态，暂时无法提供服务</p>
+                    <p className="text-lg font-medium">The agent is offline</p>
+                    <p className="text-sm mt-1">This agent is currently offline and cannot be reached.</p>
                 </div>
             )}
 

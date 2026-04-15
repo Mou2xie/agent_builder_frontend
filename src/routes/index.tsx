@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async"
 import { NavLink } from "react-router"
 import { useAuthStore } from "../stores/useAuthStore"
 import heroImage from "../assets/hero.png"
@@ -90,6 +91,7 @@ export const IndexPage = () => {
 
   return (
     <>
+      <Helmet><title>Home - NovaAgent</title></Helmet>
       <section className="pt-30 pb-20 bg-background-card">
 
         <div className="mx-30 bg-background-hero rounded-4xl grid grid-cols-9 gap-10 pl-15 py-28 boprder">

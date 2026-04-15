@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { NavLink, useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import { supabaseClient } from "../libs/supabaseClient";
 import { useAuthStore } from "../stores/useAuthStore";
 import robothand from "../assets/robothand.png";
@@ -53,6 +54,7 @@ export const SignupPage = () => {
 
     return (
         <div className=" min-h-screen flex justify-center items-center bg-background-hero relative">
+            <Helmet><title>Signup - NovaAgent</title></Helmet>
             <div className=" absolute top-5 left-5 flex items-center gap-2">
                 <img src={logo} alt="NovaAgent logo" className=" w-8 h-8" />
                 <p className=" font-heading font-bold text-xl text-text-main">NovaAgent</p>
