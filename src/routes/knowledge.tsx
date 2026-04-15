@@ -35,8 +35,8 @@ export const KnowledgePage = () => {
         .upload(filePath, file);
       if (error) throw error;
 
-      // get task_id from gag service
-      const res = await fetch(`${import.meta.env.VITE_GAG_SERVICE_URL}/${id}/${rawFileName}/${user?.id}`, {
+      // get task_id from rag service
+      const res = await fetch(`${import.meta.env.VITE_RAG_SERVICE_URL}/${id}/${rawFileName}/${user?.id}`, {
         method: "POST",
         headers: {
           "X-API-Key": import.meta.env.VITE_SERVICE_API_KEY
