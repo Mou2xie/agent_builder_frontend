@@ -1,5 +1,5 @@
 {
-  "name": "agent_builder_frontend",
+  "name": "nova-agent",
   "private": true,
   "version": "0.0.0",
   "type": "module",

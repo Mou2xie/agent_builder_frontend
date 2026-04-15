@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# NovaAgent
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NovaAgent is a platform for building, configuring, and chatting with AI agents. Users create agents, upload private knowledge documents, set rules and behaviors, then share them via a public chat interface.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript** (strict mode)
+- **Vite 8** with `@vitejs/plugin-react`
+- **Tailwind CSS v4** via `@tailwindcss/vite` — theme tokens in `src/index.css`, no config file
+- **Supabase** — auth, Postgres, Storage, Realtime
+- **Zustand** — auth state
+- **TanStack React Query** — server state
+- **Vercel** — deployment with API proxy rewrites
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create a `.env` file (see `.gitignore` — it's excluded from version control):
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_SUPABASE_URL=
+VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=
+VITE_CHAT_API=
+VITE_GAG_SERVICE_URL=
+VITE_SERVICE_API_KEY=
 ```
+
+The app will not run without these values.
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server with HMR |
+| `npm run build` | Type-check (`tsc -b`) then Vite production build |
+| `npm run lint` | ESLint (typescript-eslint, react-hooks, react-refresh) |
+| `npm run preview` | Preview production build locally |
+
+## Project Structure
+
+```
+src/
+  main.tsx              # Entry point — router, providers
+  index.css             # Tailwind v4 @theme tokens (single source of truth)
+  layouts/
+    RootLayout.tsx      # Auth bootstrap (Supabase getUser + onAuthStateChange)
+    LandingLayout.tsx   # Public landing wrapper
+    DashboardLayout.tsx # Sidebar nav for agent config pages
+  routes/               # One file per route
+  components/           # Shared UI (Modal, Topbar, Navbar, AgentCard, Chatbar, …)
+  stores/
+    useAuthStore.ts     # Zustand — { user, setUser }
+  libs/
+    supabaseClient.ts   # Single Supabase client
+    avatar.ts           # resolveAvatarUrl() for Supabase Storage paths
+```
+
+## Key Flows
+
+### Auth
+`RootLayout` calls `supabaseClient.auth.getUser()` on mount and subscribes to `onAuthStateChange`. The user object is stored in `useAuthStore`. `DashboardLayout` redirects to `/login` when no user is present.
+
+### Knowledge Upload
+Two-step process — both steps must be preserved:
+1. Upload file to Supabase Storage bucket `files` at path `{agentId}/{timestamp}-{filename}`
+2. POST to `/api/rag/{agentId}/{filename}/{userId}` (proxied to RAG service via Vercel rewrite) → returns `task_id`
+3. Subscribe to Supabase Realtime on `document_tasks` table for status updates (`pending` → `processing` → `completed` | `failed`)
+
+### Chat
+Uses `@ai-sdk/react` `useChat` with `DefaultChatTransport`. Chat endpoint is `{VITE_CHAT_API}/{agentId}`. Accessible at `/chat/:id` without auth guard (public-facing).
+
+## Vercel Proxy
+
+`vercel.json` rewrites:
+- `/api/rag/:path*` → RAG service on Railway
+- `/(.*)` → `/index.html` (SPA fallback)
+
+## Design System
+
+See `DESIGN.md` for the full color/shadow specification. Theme tokens live in `src/index.css` under `@theme {}`.
+
+- **Fonts**: Inter (body), Comfortaa (headings) via Google Fonts
+- **Icons**: lucide-react
+- **Page titles**: `<Helmet>` format — `"Page Name - NovaAgent"`
