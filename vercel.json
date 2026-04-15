@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/rag/:path*",
+      "destination": "https://agentbuilderragservice-production.up.railway.app/api/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
