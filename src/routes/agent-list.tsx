@@ -51,7 +51,7 @@ export const AgentListPage = () => {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ["agent-list"],
         queryFn: async () => {
-            const { data, error } = await supabaseClient.from("agents").select("id,name,personnel,job_description,status,avatar_url");
+            const { data, error } = await supabaseClient.from("agents").select("id,name,personnel,job_description,status,avatar_url").eq("user_id", user?.id);
             if (error) {
                 throw new Error(error.message);
             }
