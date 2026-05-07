@@ -12,6 +12,7 @@ interface Rule {
     keywords: string[]
     response: string
     paused: boolean
+    strict: boolean
 }
 
 export const RulePage = () => {
@@ -22,6 +23,7 @@ export const RulePage = () => {
     const [editingRule, setEditingRule] = useState<Rule | null>(null)
     const [formKeywords, setFormKeywords] = useState<string[]>([])
     const [formResponse, setFormResponse] = useState("")
+    const [formStrict, setFormStrict] = useState(false)
     const [keywordInput, setKeywordInput] = useState("")
 
     const query = useQuery({
@@ -38,7 +40,7 @@ export const RulePage = () => {
         },
     })
 
-    const rules: Rule[] = query.data?.rules ?? []
+    const rules: Rule[] = (query.data?.rules ?? []).map(r => ({ ...r, strict: r.strict ?? false }))
 
     const updateRulesMutation = useMutation({
         mutationFn: async (newRules: Rule[]) => {
@@ -60,6 +62,7 @@ export const RulePage = () => {
         setEditingRule(null)
         setFormKeywords([])
         setFormResponse("")
+        setFormStrict(false)
         setKeywordInput("")
         setModalOpen(true)
     }
@@ -68,6 +71,7 @@ export const RulePage = () => {
         setEditingRule(rule)
         setFormKeywords([...rule.keywords])
         setFormResponse(rule.response)
+        setFormStrict(rule.strict)
         setKeywordInput("")
         setModalOpen(true)
     }
@@ -98,7 +102,7 @@ export const RulePage = () => {
         if (editingRule) {
             newRules = rules.map((r) =>
                 r.id === editingRule.id
-                    ? { ...r, keywords: formKeywords, response: formResponse.trim() }
+                    ? { ...r, keywords: formKeywords, response: formResponse.trim(), strict: formStrict }
                     : r,
             )
         } else {
@@ -107,6 +111,7 @@ export const RulePage = () => {
                 keywords: formKeywords,
                 response: formResponse.trim(),
                 paused: false,
+                strict: formStrict,
             }
             newRules = [...rules, newRule]
         }
@@ -221,6 +226,25 @@ export const RulePage = () => {
                             value={formResponse}
                             onChange={(e) => setFormResponse(e.target.value)}
                         />
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer select-none">
+                        <button
+                            type="button"
+                            role="switch"
+                            aria-checked={formStrict}
+                            onClick={() => setFormStrict(v => !v)}
+                            className={`w-11 h-6 rounded-full relative transition-colors duration-200 shrink-0 ${formStrict ? "bg-primary" : "bg-border-light"}`}
+                        >
+                            <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-card-soft transition-all duration-200 ${formStrict ? "left-5.5" : "left-0.5"}`} />
+                        </button>
+                        <div>
+                            <span className="text-primary text-sm">{formStrict ? "STRICT FOLLOWED" : "REFERENCE"}</span>
+                            <p className="text-text-muted text-xs">
+                                {formStrict
+                                    ? "Return this response directly without any other content."
+                                    : "This response will be involved alongside with other content."}
+                            </p>
+                        </div>
                     </label>
                     <div className="flex justify-end gap-3">
                         <button

@@ -5,6 +5,7 @@ interface Rule {
     keywords: string[]
     response: string
     paused: boolean
+    strict: boolean
 }
 
 interface RuleCardProps {
@@ -16,7 +17,7 @@ interface RuleCardProps {
 export const RuleCard = ({ rule, onEdit, onDelete }: RuleCardProps) => {
     return (
         <div className="bg-background-card border border-border-light rounded-xl px-8 pt-8">
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap items-center gap-2 mb-4">
                 {rule.keywords.map((kw) => (
                     <span
                         key={kw}
@@ -27,7 +28,17 @@ export const RuleCard = ({ rule, onEdit, onDelete }: RuleCardProps) => {
                 ))}
             </div>
             <p className="text-sm text-text-secondary leading-relaxed line-clamp-3 mb-6">{rule.response}</p>
-            <div className="flex justify-end items-center gap-5 py-5 border-t border-border-divider">
+            <div className="flex justify-between items-center gap-5 py-5 border-t border-border-divider">
+                {rule.strict ? (
+                    <span className="text-xs font-medium text-amber-700">
+                        STRICT FOLLOWED
+                    </span>
+                ) : (
+                    <span className="text-xs font-medium text-blue-600">
+                        REFERENCE
+                    </span>
+                )}
+                <div className="flex items-center gap-5">
                 <SquarePen
                     size={22}
                     className=" text-text-muted cursor-pointer hover:text-primary transition-colors duration-200"
@@ -38,6 +49,7 @@ export const RuleCard = ({ rule, onEdit, onDelete }: RuleCardProps) => {
                     className=" text-text-muted cursor-pointer hover:text-red-400 transition-colors duration-200"
                     onClick={() => onDelete(rule.id)}
                 />
+                </div>
             </div>
         </div>
     )

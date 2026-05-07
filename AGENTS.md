@@ -5,6 +5,7 @@
 - Dev server: `npm run dev`
 - Lint: `npm run lint` (ESLint with typescript-eslint + react-hooks + react-refresh)
 - Build + typecheck: `npm run build` (runs `tsc -b` then Vite build — use this to verify types)
+- Preview production build: `npm run preview`
 - No test suite exists
 
 ## Environment
@@ -12,7 +13,6 @@ All env vars are Vite-prefixed, read via `import.meta.env` from `.env` (gitignor
 - `VITE_SUPABASE_URL` — Supabase project URL
 - `VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY` — Supabase anon/public key
 - `VITE_CHAT_API` — Base URL for the AI chat backend (used by `@ai-sdk/react` `useChat`)
-- `VITE_GAG_SERVICE_URL` — RAG/vectorization service base URL
 - `VITE_SERVICE_API_KEY` — API key sent as `X-API-Key` header to RAG service
 
 App will break at runtime without these. Changes that add new env vars must also update `src/libs/supabaseClient.ts` or the consuming component.
@@ -23,13 +23,14 @@ Single-package SPA (no monorepo). Deployed on Vercel.
 ```
 src/
   main.tsx          # Entry point, router, providers (QueryClient, Helmet, BrowserRouter)
-  index.css          # Tailwind v4 @theme tokens (the only theme config — no tailwind.config.*)
+  index.css         # Tailwind v4 @theme tokens + custom utilities (.clamp-1-fixed, .clamp-2-fixed)
   layouts/
     RootLayout.tsx   # Auth bootstrap: supabase getUser + onAuthStateChange → Zustand store
     LandingLayout.tsx
     DashboardLayout.tsx  # Sidebar nav for agent config pages
   routes/           # Page components (one file per route)
-  components/       # Shared UI (Modal, Topbar, Navbar, AgentCard, Chatbar, InfoTip, RuleCard)
+  components/       # Shared UI: Modal, Topbar, Navbar, AgentCard, Chatbar, InfoTip, RuleCard
+    InfoTip.tsx     # Hover tooltip used in Personnel/Behavior forms for field help text
   stores/
     useAuthStore.ts  # Zustand store — { user, setUser }
   libs/
@@ -53,7 +54,7 @@ src/
 `vercel.json` rewrites `/api/rag/:path*` → `https://agentbuilderragservice-production.up.railway.app/api/:path*`. All other routes fall back to `index.html` (SPA). The RAG service destination URL is hardcoded in `vercel.json`, not env-configured.
 
 ## Supabase Tables Referenced in Code
-- `agents` — columns: `id`, `name`, `avatar_url`, `status` (`"STANDBY" | "ONLINE"`), `job_description`, `personnel`, `welcome_message`
+- `agents` — columns: `id`, `user_id`, `name`, `avatar_url`, `status` (`"STANDBY" | "ONLINE"`), `theme_color`, `tone` (`"professional" | "casual" | "neutral"`), `job_description`, `personnel`, `goals`, `welcome_message`, `rules` (JSON: `{id, keywords[], response, paused, strict}[]`)
 - `documents` — deleted by `agent_id` + `file_name` when file is removed
 - `document_tasks` — Realtime-tracked; columns: `id`, `status` (`pending|processing|completed|failed`)
 - Storage buckets: `"avatar"`, `"files"`
@@ -64,6 +65,7 @@ src/
 - Fonts: `Inter` (body), `Comfortaa` (headings), loaded via Google Fonts `@import`.
 - Page titles set with `<Helmet>` from `react-helmet-async`, format: `"Page Name - NovaAgent"`.
 - Icons from `lucide-react`.
+- Custom CSS utilities in `index.css`: `clamp-1-fixed`, `clamp-2-fixed` (used by `AgentCard`).
 - No code comments in the codebase — match this convention.
 
 ## Gotchas
@@ -72,3 +74,6 @@ src/
 - `erasableSyntaxOnly` is enabled — no `enum` declarations, use const objects or union types instead.
 - `noUnusedLocals` + `noUnusedParameters` are strict — clean up unused vars before building.
 - Avatar URLs may be relative Supabase Storage paths; always use `resolveAvatarUrl()` from `src/libs/avatar.ts` rather than using raw `avatar_url` values directly.
+- File upload accept patterns: knowledge page accepts `.pdf,.txt,.docx,.md,.markdown`; avatar upload accepts `.png,.jpg,.jpeg,.svg`.
+- Default avatars for new agents are drawn from hardcoded `/default-avatars/{shamshad,xie,lu,sam,anton}.png` (see `agent-list.tsx`).
+- Share page uses `qrcode.react` (`QRCodeSVG`) for QR code generation — this is the only place this dependency is used.
