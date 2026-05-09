@@ -16,6 +16,10 @@ export const Navbar = () => {
                 Beta
             </div>
             <div className="ml-auto hidden md:flex items-center gap-6">
+                <a href="https://www.novaagent.me/chat/234633c1-7544-4531-973f-b0a34b8235e4" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-5 py-2 text-sm border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
+                    <img src={logo} alt="" className="h-4 w-4" />
+                    Nova Assistant
+                </a>
                 {user ? (
                     <NavLink to="/dashboard/agent-list" className="px-5 py-2 text-sm bg-primary text-white rounded-lg hover:opacity-85 transition-opacity duration-200 cursor-pointer">
                         Dashboard
