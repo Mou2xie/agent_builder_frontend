@@ -10,6 +10,7 @@ export const RootLayout = () => {
     useEffect(() => {
         let isMounted = true;
 
+        // Initialize auth state on component mount
         const initAuth = async () => {
             const {
                 data: { user },
@@ -22,12 +23,14 @@ export const RootLayout = () => {
 
         initAuth();
 
+        // Listen for auth state changes and update the store accordingly
         const {
             data: { subscription },
         } = supabaseClient.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
         });
 
+        // Cleanup function to unsubscribe from auth state changes when the component unmounts
         return () => {
             isMounted = false;
             subscription.unsubscribe();

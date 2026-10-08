@@ -30,6 +30,7 @@ export const AgentListPage = () => {
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
+            // Close the menu if the click is outside of the menu
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
                 setMenuOpen(false);
             }
